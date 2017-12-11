@@ -1,0 +1,53 @@
+<?php
+$this->headTitle('Sign in');
+
+//$this->mainMenu()->setActiveItemId('login');
+
+$form->get('login')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Логин',
+    'required' => true,
+    'autofocus' => true
+])
+    ->setLabelAttributes([
+        'class' => 'sr-only'
+    ]);
+
+$form->get('password')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Пароль',
+    'required' => true,
+])
+    ->setLabelAttributes([
+        'class' => 'sr-only'
+    ]);
+?>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-3">
+            <form class="form-signin" method="post">
+                <h2 class="form-signin-heading">Вход</h2>
+                <?php if ($isLoginError): ?>
+                    <div class="alert alert-warning" role="alert">
+                        Неправильный логин или пароль.
+<!--                        <a href="--><?//= $this->url('reset-password') ?><!--">Forgot password?</a>-->
+                    </div>
+                <?php endif; ?>
+                <?= $this->formLabel($form->get('login')); ?>
+                <?= $this->formElement($form->get('login')); ?>
+                <?= $this->formLabel($form->get('password')); ?>
+                <?= $this->formElement($form->get('password')); ?>
+                <div class="checkbox">
+                    <label>
+                        <?= $this->formElement($form->get('remember_me')); ?> Запомнить меня
+                    </label>
+                </div>
+                <?= $this->formElement($form->get('redirect_url')); ?>
+                <?= $this->formElement($form->get('csrf')) ?>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+</div>

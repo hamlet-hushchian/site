@@ -1,0 +1,11 @@
+<div class="line-detail-wrap">
+    <? foreach ($this->paramsValue as $paramValue) {
+        if (!is_string($paramValue) && !in_array($paramValue->getParam()->getParamKey(), ['flat_number', 'house_number'])) {
+            ?>
+            <div class="line-detail-item-wrap">
+                <p class="key"><?= $paramValue->getParam()->getName() ?>:</p>
+                <p <?= $paramValue->getValue() == 'Индивидуальное' ? 'style="font-size: .7em;"' : '' ?> class="value"><?= $paramValue->getValue() ?></p>
+            </div>
+        <? }
+    } ?>
+</div>

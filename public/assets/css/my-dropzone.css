@@ -1,0 +1,19 @@
+.dropzone .dz-preview, .dropzone-previews .dz-preview{
+    display: block;
+}
+.dz-image{
+    display: inline-block;
+}
+.dz-image img{
+    width:auto;
+    max-width: 520px;
+}
+.dropzone .dz-preview, .dropzone-previews .dz-preview{
+    text-align: center;
+}
+.dropzone .dz-preview .dz-details, .dropzone-previews .dz-preview .dz-details{
+    display: none;
+}
+.dz-preview{
+    cursor: pointer;
+}

@@ -1,0 +1,120 @@
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .main-slider-wrap{
+        padding: 0;
+    }
+    .arr-line-wrap .arr-item{
+        float: right;
+        width: 65%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .arr-line-wrap .arr-item:last-child{
+        width: 35%;
+    }
+    /*.mnu_col{*/
+        /*display: inline-block !important;*/
+    /*}*/
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .hidden-md-up {
+        display: none;
+    }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .hidden-xs .line-detail-wrap{
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+    .arr-line-wrap .arr-item,.arr-line-wrap .arr-item:last-child{
+        width: auto;
+    }
+    .arr-line-wrap .arr-item:before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -13px;
+        z-index:99;
+        border-right: 13px solid #d64521;
+        border-top: 23px solid transparent;
+        border-bottom: 23px solid transparent;
+    }
+    .arr-line-wrap p{
+        float: left;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
+
+@media (max-width: 576px) {
+   .slider__preview_wrap{
+       display: none;
+   }
+    .slider__main_wrap{
+        width: 100%;
+    }
+    .slider__main_wrap .mainx-next{
+         right: 0;
+     }
+
+}
+
+@media (max-width: 767px) {
+    .hidden-sm-down{
+        display: none;
+    }
+    .mnu_col {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 60px;
+        bottom: 0;
+        z-index: 99;
+        padding: 0;
+        background: #eee;
+        display: none;
+    }
+
+    nav ul li {
+        display: block;
+        text-align: center;
+        padding: 0;
+
+    }
+
+    nav ul li a, nav ul li a.active, nav ul li a:hover {
+        border: none !important;
+    }
+
+    nav ul li a.active {
+        background: #ddd;
+    }
+}
+
+@media (max-width: 992px) {
+    .icon-wrap ul li{
+        display: block;
+        border-left: none;
+        border-top: solid 1px #ddd;
+    }
+
+    .side_block .redl-btn{
+        font-size: .8em;
+    }
+
+    .side_block .line-detail-wrap .value{
+        max-width: 35%;
+        word-wrap: break-word;
+    }
+    .side_block .line-detail-wrap p{
+        font-size: .8em;
+    }
+}

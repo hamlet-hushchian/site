@@ -1,0 +1,226 @@
+<?$errors = $this->form->getMessages(); $form->prepare();?>
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title"><?= $this->isEdit ? 'Редактировать объявление' : 'Добавить объявление' ?></h1>
+        <p class="description">Здесь вы можете <?= $this->isEdit ? 'отредактировать' : 'добавить новое' ?> объявление. Не забудтье заполнить все обязательные
+            поля. </p>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="dashboard-1.html"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+
+                <a href="forms-native.html">Forms</a>
+            </li>
+            <li class="active">
+
+                <strong>Form Wizard</strong>
+            </li>
+        </ol>
+
+    </div>
+
+</div>
+
+<?= $this->form()->openTag($form); ?>
+
+<ul class="tabs">
+    <li class="active">
+        <a href="#fwv-1" data-toggle="tab">
+            Основная информация
+            <span>1</span>
+        </a>
+    </li>
+    <li class="step" data-step="2">
+        <a href="#fwv-2" data-toggle="tab">
+            Дополнительная информация
+            <span>2</span>
+        </a>
+    </li>
+    <li class="step" data-step="3">
+        <a href="#fwv-3" data-toggle="tab">
+            Фотографии
+            <span>3</span>
+        </a>
+    </li>
+</ul>
+
+<div class="progress-indicator">
+    <span></span>
+</div>
+
+<div class="tab-content no-margin">
+    <!-- Tabs Content -->
+    <div class="tab-pane with-bg active" id="fwv-1">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('deal_type')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('deal_type')); ?>
+                    <?= $this->formElement($form->get('deal_type')); ?>
+                    <?= $this->formElementErrors($form->get('deal_type')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('property_type')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('property_type')); ?>
+                    <?= $this->formElement($form->get('property_type')); ?>
+                    <?= $this->formElementErrors($form->get('property_type')); ?>
+                </div>
+            </div>
+            <div class="com_type_wrap"></div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('city')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('city')); ?>
+                    <?= $this->formElement($form->get('city')); ?>
+                    <?= $this->formElementErrors($form->get('city')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('district')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('district')); ?>
+                    <?= $this->formElement($form->get('district')); ?>
+                    <?= $this->formElementErrors($form->get('district')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('microdistrict')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('microdistrict')); ?>
+                    <?= $this->formElement($form->get('microdistrict')); ?>
+                    <?= $this->formElementErrors($form->get('microdistrict')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('subway_station')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('subway_station')); ?>
+                    <?= $this->formElement($form->get('subway_station')); ?>
+                    <?= $this->formElementErrors($form->get('subway_station')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('street')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('street')); ?>
+                    <?= $this->formElement($form->get('street')); ?>
+                    <?= $this->formElementErrors($form->get('street')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('house_number')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('house_number')); ?>
+                    <?= $this->formElement($form->get('house_number')); ?>
+                    <?= $this->formElementErrors($form->get('house_number')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('flat_number')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formLabel($form->get('flat_number')); ?>
+                    <?= $this->formElement($form->get('flat_number')); ?>
+                    <?= $this->formElementErrors($form->get('flat_number')); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group <?= $this->formElementErrors($form->get('phone')) !== '' ? 'has-error' : '' ?>">
+                    <?= $this->formCollection($form->get('phone')); ?>
+                    <?= $this->formElementErrors($form->get('phone')); ?>
+
+                    <button class="btn btn-icon btn-success pull-right collect add">
+                        <i class="fa-plus"></i>
+                    </button>
+
+                    <button class="btn btn-icon btn-red pull-right <?= $form->get('phone')->getCount() < 2 ? 'hidden' : '' ?> collect rm">
+                        <i class="fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <ul class="pager wizard">
+                    <li class="next"><a href="#">Следующий шаг <i class="entypo-right-open"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?= $this->form()->closeTag(); ?>
+
+<div class="hidden">
+    <div id="com_types">
+        <div class="form-group <?= $this->formElementErrors($form->get('com_property_type')) !== '' ? 'has-error' : '' ?>">
+            <?= $this->formLabel($form->get('com_property_type')); ?>
+            <?= $this->formElement($form->get('com_property_type')); ?>
+            <?= $this->formElementErrors($form->get('com_property_type')); ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateComType() {
+        var comType = $("#com_types .form-group");
+        var cmw = $('.com_type_wrap');
+        cmw.empty();
+        cmw.removeClass('col-md-6');
+        if($('select[name="property_type"]').val() == 4)
+        {
+            cmw.addClass('col-md-6');
+            cmw.append(comType);
+        }
+    }
+    
+    function updateMicrodistrict(district_id) {
+        $.ajax({
+            type:'post',
+            url:'/admin/listings/ajax',
+            data:{microdistrict:1,district_id:district_id},
+            dataType:'json',
+            success:function (res) {
+                var el = $('select[name="microdistrict"]');
+                el.empty();
+                $.each(res,function (k,v) {
+                    el.append('<option value="'+k+'">'+v+'</option>');
+                });
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        updateComType();
+        updateMicrodistrict($('select[name="district"]').val());
+        $(document).on('change','select[name="property_type"]',function () {
+            updateComType();
+        });
+
+        $('select[name="district"]').change(function () {
+            updateMicrodistrict($(this).val());
+        });
+
+        var defaultBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(50.3308, 30.2124),
+            new google.maps.LatLng(50.3698, 30.8030));
+
+        var input = document.getElementById('street');
+        var options = {
+            bounds: defaultBounds,
+            componentRestrictions: {country: 'ua'},
+            types: ['geocode']
+        };
+
+        autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        $('.next a,.step').click(function (e) {
+            e.preventDefault();
+            if($(this).data('step'))
+                $('#add_listing-from').append('<input type="hidden" name="step" value="'+$(this).data('step')+'" /> ');
+            $('#add_listing-from').submit();
+        });
+    });
+</script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKOsmSnuOK7SPlEtXGhZdxUZWg4QNRcoQ&libraries=places"></script>
+

@@ -1,0 +1,267 @@
+<div class="container">
+
+    <? $this->bredcrumbs()->setSourceToId($this->listing->getId()); ?>
+    <?= $this->bredcrumbs()->render() ?>
+
+    <? $params = [] ?>
+
+    <?php
+    foreach ($this->listing->getParamsValue() as $pv) {
+        if (!is_string($pv)) {
+            $params[$pv->getParam()->getParamKey()] = $pv->getValue();
+        }
+    }
+    ?>
+
+
+    <h1><?= $this->listing->getStreet() ?> <?= $params['house_number'] ?></h1>
+    <div class="region-in-header">
+        <?= $this->listing->getMicroDistrict()->getDistrict()->getName() ?>
+        район, <?= $this->listing->getMicroDistrict()->getName() ?>, Киев
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+            <div class="slider">
+                <div class="slider__main_wrap">
+                    <div class="slider__main">
+                        <? for ($i = 0; $i < count($this->listing->getImages()); $i++) { ?>
+                            <img data-index="<?= $i ?>" src="<?= $this->listing->getImages()[$i]->getThumbLink() ?>"/>
+                        <? } ?>
+                    </div>
+                    <div class="navx-btn mainx-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+                    <div class="navx-btn mainx-next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                </div>
+
+                <div class="slider__preview_wrap">
+                    <div class="slider__preview">
+                        <? for ($i = 0; $i < count($this->listing->getImages()); $i++) { ?>
+                            <img data-index="<?= $i ?>" src="<?= $this->listing->getImages()[$i]->getThumbLink() ?>"/>
+                        <? } ?>
+                    </div>
+                    <div class="preview-btn-wrap">
+                        <div class="car-btn preview-up">
+                            <div class="icon_wrap">
+                                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="car-btn preview-down">
+                            <div class="icon_wrap">
+                                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 ">
+                    <div class="arr-line-wrap">
+                        <p><?= $this->listing->getMicroDistrict()->getDistrict()->getName() ?>
+                            район, <?= $this->listing->getStreet() ?>  <?= $params['house_number'] ?></p>
+                        <div class="arr-item">
+                            €<?= $this->listing->getPrice()['eur'] ?>,
+                            $<?= $this->listing->getPrice()['usd'] ?>
+                        </div>
+                        <div class="arr-item">
+                            UAH <?= $this->listing->getPrice()['uah'] ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 ">
+                    <div class="content-wrap">
+                        <div class="icon-wrap">
+                            <ul>
+                                <li>
+                                    id:
+                                    <span><?= $this->listing->getId() ?></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                    <span><?= $this->listing->getParamsValue()[4]->getValue() ?> м<sup>2</sup></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-bed" aria-hidden="true"></i>
+                                    <span><?= $this->listing->getParamsValue()['roomsString'] ?></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                                    <span><?= $this->listing->getParamsValue()['levelsString'] ?></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-subway" aria-hidden="true"></i>
+                                    <span><?= $this->listing->getSubwayStation()->getName() ?></span>
+                                </li>
+                                <li>
+                                    <!--                                    <a href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row hidden-md hidden-lg">
+                <div class="col-xs-12">
+                    <?= $this->partial('application/listing/partial/phone-block');?>
+                </div>
+                <div class="col-xs-12  ">
+                    <?= $this->partial('application/listing/partial/params-block',['paramsValue' => $this->listing->getParamsValue()]);?>
+                </div>
+            </div>
+            <div class="content-descr">
+                <div class="title">
+                    Описание:
+                </div>
+                <p>
+                    <?= $listing->getDescription(); ?>
+                </p>
+            </div>
+            <div id="map"></div>
+            <br><br>
+            <script>
+                function initMap() {
+                    var uluru = {lat: <?=$this->listing->lat?>, lng: <?=$this->listing->long?>};
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 15,
+                        scrollwheel: false,
+                        center: uluru
+                    });
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                    });
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKOsmSnuOK7SPlEtXGhZdxUZWg4QNRcoQ&callback=initMap">
+            </script>
+        </div>
+
+        <div class="col-xs-12 side_block col-md-4 col-lg-3 hidden-xs hidden-sm">
+            <?= $this->partial('application/listing/partial/phone-block');?>
+            <?= $this->partial('application/listing/partial/params-block',['paramsValue' => $this->listing->getParamsValue()]);?>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal_selection" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="containers">
+                    <?= $this->form()->openTag($form); ?>
+                    <div class="form-group row">
+                        <?= $this->formLabel($form->get('name')); ?>
+                        <div class="col-sm-12">
+                            <?= $this->formElement($form->get('name')); ?>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPhone" class="col-sm-12 col-form-label">Телефон</label>
+                        <div class="col-sm-12">
+                            <?= $this->formElement($form->get('phone')); ?>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <?= $this->formLabel($form->get('message')); ?>
+                        <div class="col-sm-12">
+                            <?= $this->formElement($form->get('message')); ?>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+
+                        </div>
+                    </div>
+                    <?= $this->form()->closeTag(); ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Заказать</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#modal_selection form input').focus(function () {
+            $(this).closest('.form-group').removeClass('has-error');
+            $(this).siblings('.help-block').text('');
+        });
+        $('#modal_selection button[type="submit"]').click(function (e) {
+            e.preventDefault();
+            var $modal = $('#modal_selection');
+            var $form = $modal.find('form');
+            $.ajax({
+                type: 'post',
+                url: '',
+                data: $form.serializeArray(),
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        $modal.modal('hide');
+                        swal('Ваша заявка принята', "Мы свяжемся с вами в ближайшее время", 'success');
+                        $('#modal_selection form')[0].reset();
+                    }
+                    else {
+                        $.each(res, function (k, v) {
+                            var $input = $('input[name="' + k + '"]');
+                            $input.closest('.form-group').addClass('has-error');
+                            $.each(v, function () {
+                                $input.siblings('.help-block').text(this);
+                            });
+
+                        })
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+
+        // build items array
+        var items = [
+            <? for($i = 0; $i < count($this->listing->getImages()); $i++){
+            $image = getimagesize('/home/newredl/redl.com.ua/www/public/assets/uploads/listing-images/' . $this->listing->getImages()[$i]->getUniqId() . '/source/' . $this->listing->getImages()[$i]->getName() . '.' . $this->listing->getImages()[$i]->getExt());
+            ?>
+            {
+                src: '<?=$this->listing->getImages()[$i]->getSourceLink()?>',
+                w: <?=$image[0]?>,
+                h: <?=$image[1]?>
+            },
+            <?}?>
+        ];
+
+        // define options (if needed)
+        var options = {
+            // optionName: 'option value'
+            // for example:
+            index: 0 // start at first slide
+        };
+
+        // Initializes and opens PhotoSwipe
+        $(document).on('click', '.slider__main .slick-slide', function () {
+            var index = $(this).data('index');
+            var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.options.index = index;
+            gallery.init();
+        });
+
+    });
+
+
+</script>
+
+
+

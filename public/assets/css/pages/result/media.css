@@ -1,0 +1,138 @@
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .hidden-md-up {
+        display: none;
+    }
+
+    .mnu_col {
+        display: inline-block !important;
+    }
+
+    .s_search {
+        padding: 0;
+    }
+
+    .x-select-wrap:first-child {
+        margin: 15px 0 0 0;
+    }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .hidden-md-up {
+        display: none;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
+
+@media (max-width: 576px) {
+
+}
+
+@media (max-width: 991px) {
+
+    .hidden-sm-down {
+        display: none;
+    }
+
+    .s_search {
+        padding: 0;
+    }
+
+    .x-select-wrap:first-child {
+        margin-top: 10px;
+    }
+
+    .x-select-wrap {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .x-select-item-wrap {
+        margin: 0;
+        margin-top: 5px !important;
+    }
+
+    #withphoto {
+        min-width: auto;
+    }
+
+    #byid {
+        padding-left: 10px;
+        border: none;
+    }
+
+    #swiper {
+        line-height: 22px;
+        padding: 0 0 0 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .mnu_col {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 60px;
+        bottom: 0;
+        z-index: 99;
+        padding: 0;
+        background: #eee;
+        display: none;
+    }
+
+    nav ul li {
+        display: block;
+        text-align: center;
+        padding: 0;
+
+    }
+
+    nav ul li a, nav ul li a.active, nav ul li a:hover {
+        border: none !important;
+    }
+
+    nav ul li a.active {
+        background: #ddd;
+    }
+
+    .listing-wrap .img-wrap {
+        padding-right: 15px;
+    }
+
+    .listing-wrap .info-wrap {
+        padding-left: 15px;
+    }
+
+    .listing-wrap .info-wrap .descr a {
+        display: block;
+    }
+
+    .icon-wrap ul li:first-child {
+        border-bottom: solid 1px #ddd;
+    }
+
+    .icon-wrap ul li {
+        display: block;
+        border-left: none;
+        border-bottom: solid 1px #ddd;
+    }
+
+    .icon-wrap ul li:last-child {
+        float: none;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 992px) {
+
+}

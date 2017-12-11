@@ -1,0 +1,191 @@
+input {
+    -webkit-appearance: none;
+    -webkit-border-radius:0;
+}
+header{
+    background: #fff;
+    border-bottom: solid 1px #e4e4e4;
+}
+header .logo_wrap{
+    line-height: 60px;
+}
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+}
+
+.sw-topper,.sw-bottom,.sw-footer{
+    background: #d64521;
+}
+.logo_wrap{
+    display: inline-block;
+}
+.logo_wrap img{
+    max-width: 230px;
+}
+nav ul li{
+    padding: 0 10px;
+}
+nav ul li a{
+    color: #121212;
+    opacity: .9;
+    font-size: .9em;
+    font-weight: bold;
+    line-height: 60px;
+    display: block;
+    border-color: #fff;
+    -webkit-transition: color .3s, opacity .3s, border-color .3s, background .3s;
+    transition: color .3s, opacity .3s, border-color .3s, background .3s;
+}
+nav ul{
+    margin: 0;
+}
+nav ul li a.active{
+    border-bottom: solid 3px #d64521;
+}
+nav ul li a:hover{
+    text-decoration: none;
+    color: #000;
+}
+nav ul li a:hover:not(.active){
+    border-bottom: 3px solid rgba(18, 18, 18, .3);
+}
+.s_search{
+    background: #fff;
+    padding: 20px;
+    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.x-select-item-wrap{
+    border: solid 1px #ddd;
+}
+#rooms,#price,#swiper,#byid,#withphoto{
+    margin-top: 10px;
+}
+
+.s_info h1{
+    margin: 3px 0 0;
+    font-size: 1.4em;
+    font-weight: 700;
+    line-height: 28px;
+    color: #191919;
+}
+.s_info .count{
+    padding: 5px 12px;
+    display: inline-block;
+    color: #121212;
+    background-color: #e4e4e4;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+.listings-wrap{
+    margin-bottom: 20px;
+}
+.listing-wrap{
+    background: #fff;
+    border: solid 1px #ddd;
+    padding: 15px 19px 0 19px;
+    margin-top: 20px;
+}
+
+.listing-wrap h4{
+    margin-bottom: 17px;
+    font-size: 1.2em;
+}
+.listing-wrap h4 a{
+    color: #394041;
+    font-weight: 400;
+    text-decoration: none !important;
+}
+.listing-wrap .img-wrap{
+    padding-right:0;
+    position: relative;
+}
+.listing-wrap .price-label{
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    font-size: .6em;
+    background: rgba(255,255,255,.65);
+    padding: 2px;
+}
+.listing-wrap .price-label:last-child{
+    top: 24px;
+}
+.row.listing-content {
+    min-height: 150px;
+}
+.listing-wrap .info-wrap{
+    padding-left: 0;
+}
+.listing-content .price{
+    color: #fff;
+    background: #d64521;
+    padding-left: 20px;
+    line-height: 35px;
+}
+.listing-content .descr{
+    padding: 10px 20px;
+    font-size: .7em;
+}
+.listing-content .descr a{
+    font-size: 1.1em;
+    color: #394041;
+    text-decoration: none !important;
+    font-weight: bold;
+}
+.listing-content .descr a:hover{
+    color: #d64521;
+}
+.icon-wrap{
+    margin: 15px -19px 0 -19px;
+    background: #f5f5f5;
+    border-top: solid 1px #ddd;
+}
+.icon-wrap ul li{
+    padding: 5px 10px 5px 19px;
+    border-left: solid 1px #ddd;
+    color: #717779;
+    display: inline-block;
+    font-size: .7em;
+    line-height: 27px;
+    cursor: default;
+}
+.icon-wrap ul:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.icon-wrap ul li:first-child{
+    border: none;
+}
+.icon-wrap ul li:last-child{
+    float: right;
+    padding: 0;
+}
+.icon-wrap ul li span{
+    margin-left: 10px;
+}
+.icon-wrap ul li a{
+    display: block;
+    padding: 5px 19px;
+    color: #717779;
+}

@@ -1,0 +1,142 @@
+<? $this->searchPanel()->setParams($this->data); ?>
+<?= $this->searchPanel()->render() ?>
+<section class="s_info">
+    <div class="container">
+        <? $this->bredcrumbs()->setParams($this->data); ?>
+        <?= $this->bredcrumbs()->render() ?>
+
+        <? $this->h1()->setParams($this->data); ?>
+        <?= $this->h1()->render() ?>
+
+        <? $this->countResults()->setCount($this->listings->getTotalItemCount()); ?>
+        <?= $this->countResults()->render() ?>
+    </div>
+</section>
+<section class="s_listings">
+    <div class="container">
+        <div class="row listings-wrap">
+            <?php
+                foreach ($this->listings as $listing)
+                {
+                    echo $this->partial('application/result/listing-item', ['listing'=>$listing]);
+                }
+            ?>
+
+        </div>
+
+        <?= $this->paginationControl($this->listings,
+            'Sliding',
+            'application/partial/paginator',
+            ['route' => 'result','d_type' => $this->url['d_type'], 'p_type' => $this->url['p_type'], 'city' => $this->url['city'], 'query' => $this->url['query']]); ?>
+    </div>
+</section>
+
+<script src="/lib/x-select/js/x-select.new.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $($('.s_search')[0]).xSelect();
+        adv_replace_text($('#price .adv_from').val(),$('#price .adv_to').val(),$('#price .x-select'),'Цена');
+
+        s_link();
+
+        $('.x-select-tt-item').click(function () {
+            s_link();
+        });
+
+        $("#swiper").click(function (){
+            s_link();
+        });
+
+        $('.adv_select-tt>ul>li').click(function()
+        {
+            s_link();
+        });
+
+        $(".adv_from,.adv_to").change(function()
+        {
+
+        });
+
+        function s_link() {
+            var link = '';
+            var d_type = $($('.x-select')[0]).parent('div').find('.checked').data('value');
+            var p_type = $($('.x-select')[1]).parent('div').find('.checked').data('value');
+            var city = $($('.x-select')[2]).attr('value');
+            var districts = [];
+            $.each($($('.x-select')[3]).parent('div').find('.checked'),function () {
+                districts.push($(this).data('value'));
+            });
+            var rooms = [];
+            $.each($($('.x-select')[4]).parent('div').find('.checked'),function () {
+                rooms.push($(this).data('value'));
+            });
+
+            var p_from = $("#price_from").val().replace(' ','');
+            var p_to = $("#price_to").val().replace(' ','');
+            var cur = $("#swiper div").text().toLowerCase();
+
+            link = '/'+d_type+'-'+p_type+'-'+city;
+
+            if(districts.length > 0 && districts[0] !== "null")
+            {
+                $.each(districts,function () {
+                    if(!hasGet(link))
+                    {
+                        link += '?district='+this;
+                    }
+                    else
+                    {
+                        link += '&district='+this;
+                    }
+                })
+            }
+
+            if(rooms.length > 0 && rooms[0] !== "null")
+            {
+                $.each(rooms,function () {
+                    if(!hasGet(link))
+                    {
+                        link += '?rooms='+this;
+                    }
+                    else
+                    {
+                        link += '&rooms='+this;
+                    }
+                })
+            }
+            if(p_from !== '')
+            {
+                if(!hasGet(link))
+                {
+                    link += '?price_from='+p_from;
+                }
+                else
+                {
+                    link += '&price_from='+p_from;
+                }
+            }
+            if(p_to !== '')
+            {
+                if(!hasGet(link))
+                {
+                    link += '?price_to='+p_to;
+                }
+                else
+                {
+                    link += '&price_to='+p_to;
+                }
+            }
+            if(p_from !== '' || p_to !== '')
+            {
+                link += '&currency='+cur;
+            }
+            $('a.s_link').attr('href', link);
+        }
+        function hasGet(link) {
+            var re = /\?/;
+            return re.test(link);
+        }
+    });//End of document ready.
+</script>
+

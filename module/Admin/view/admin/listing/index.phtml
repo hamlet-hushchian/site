@@ -1,0 +1,136 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Все объявление</h1>
+        <p class="description">Здесь отображаются все объявления. </p>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="dashboard-1.html"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+
+                <a href="forms-native.html">Forms</a>
+            </li>
+            <li class="active">
+
+                <strong>Form Wizard</strong>
+            </li>
+        </ol>
+
+    </div>
+
+</div>
+
+<div class="listings_wrap row">
+    <?
+    foreach ($this->listings as $listing) {
+        $params = [];
+        foreach ($listing->getParamsValue() as $k => $paramValue) {
+
+            if(is_int($k))
+            {
+                $params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
+            }
+        }
+        ?>
+        <div class="col-xs-12 listing_wrap" data-id="<?=$listing->getId()?>">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-2 image_wrap">
+                    <img src="<?= count($listing->getImages()) > 0 ? $listing->getImages()[0]->getThumbLink() : '/assets/images/noimage.jpg' ?>"/>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-5 data_wrap">
+                    <div class="status_wrap">
+
+                    </div>
+                    <h4>
+                        <?= $listing->getStreet() ?>, <?= $listing->getHouseNumber() ?>
+                    </h4>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p>Операция: <?= $listing->getDealType()->getName() ?></p>
+                            <p>Цена: <?= $listing->getPrice() ?> <?= $listing->getCurrency()->getSign() ?></p>
+                            <p>Телефон: <?= $listing->getPhones()[0]->getNumber() ?> </p>
+                            <p><?= $listing->getPropertyType()->getName() ?>
+                                , <?= $params['q_rooms'] ?> <?= $params['q_rooms'] < 5 ? $params['q_rooms'] == 1 ? 'комната' : 'комнаты' : 'комнат' ?> </p>
+                            <p>Площадь: <?= $params['common_square'] !== '' ? $params['common_square'] : '?' ?>
+                                /<?= $params['real_square'] !== '' ? $params['real_square'] : '?' ?>
+                                /<?= $params['kitchen_square'] !== '' ? $params['kitchen_square'] : '?' ?> </p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p>ID: <?= $listing->getId() ?> </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 dates_wrap text-center">
+                    <p>Добавлено</p>
+                    <span><?= $listing->getDateAdd() ?></span>
+                    <p>Редактировано</p>
+                    <span><?= $listing->getDateEdit() ?></span>
+                    <p>Прозвон</p>
+                    <span><?= $listing->getDateCall() ?></span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+                    <div class="btn-group">
+                        <a href="listings/edit/<?= $listing->getId() ?>" class="btn btn-success">Редактировать</a>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false"><span
+                                    class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-green" role="menu">
+                            <li><a href="#">Деактивировать</a></li>
+                            <li><a href="#" data-action="delete">Удалить</a></li>
+                            <li><a href="#">Прозвон</a></li>
+<!--                            <li class="divider"></li>-->
+<!--                            <li><a href="#">Separated link</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <?
+    }
+    ?>
+</div>
+
+<script>
+    $(document).on('click','.dropdown-menu li a',function (e) {
+        e.preventDefault();
+        var action = $(this).data('action');
+        var id = $(this).closest(".listing_wrap").data("id");
+        if (action == 'delete')
+        {
+            swal({
+                title: "Вы уверены?",
+                text: "Объявление будет полностью удалено!",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                confirmButtonText: "Да",
+                cancelButtonText: "Отмена",
+                confirmButtonColor: "#ec6c62"
+            }, function() {
+                console.log("confirmed");
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: 'delete&id='+id,
+                    success:function (res) {
+                        console.log(res);
+                        if(res == 'success')
+                            window.location.reload();
+                    }
+                });
+            });
+
+        }
+    });
+
+    $(document).ready(function () {
+
+    });//End of document ready
+</script>

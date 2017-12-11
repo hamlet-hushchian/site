@@ -1,0 +1,134 @@
+<div id="map" style="margin: 0;"></div>
+<script>
+    function initMap() {
+        var uluru = {lat: 50.443953, lng: 30.520334};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            scrollwheel: false,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKOsmSnuOK7SPlEtXGhZdxUZWg4QNRcoQ&callback=initMap">
+</script>
+
+<div class="container contacts-page">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h1>Контакты</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <p class="title s3">
+                Наш офис
+            </p>
+            <div class="contact-line addr">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <p class="s1">
+                    улица Крещатик, 44, Киев, Украина
+                </p>
+            </div>
+            <div class="contact-line phone">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <p class="s1">
+                    068 940-03-76
+                </p>
+            </div>
+            <div class="contact-line phone">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <p class="s1">
+                    073 738-87-87
+                </p>
+            </div>
+            <div class="contact-line phone">
+               <i class="fa fa-phone" aria-hidden="true"></i>
+                <p class="s1">
+                    095 282-00-82
+                </p>
+            </div>
+            <div class="contact-line mail">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <p class="s1">
+                    info@redl.com.ua
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <p class="title s3">
+                Напишите нам
+            </p>
+            <?= $this->form()->openTag($form); ?>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-md-6">
+                        <?= $this->formLabel($form->get('name')); ?>
+                        <?= $this->formElement($form->get('name')); ?>
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <?= $this->formLabel($form->get('phone')); ?>
+                        <?= $this->formElement($form->get('phone')); ?>
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-xs-12">
+                       <?= $this->formLabel($form->get('message')); ?>
+                        <?= $this->formElement($form->get('message')); ?>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <button type="submit" class="redl-btn red">
+                            Отправить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+
+                    </div>
+                </div>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('form input').focus(function () {
+        $(this).closest('.form-group').removeClass('has-error');
+        $(this).siblings('.help-block').text('');
+    });
+    $('form').submit(function (e) {
+        e.preventDefault();
+        var $form = $(this);
+        $.ajax({
+            type : 'post',
+            url : '',
+            data : $form.serializeArray(),
+            dataType : 'json',
+            success : function (res) {
+                if(res.success)
+                {
+                    swal('Ваша заявка принята', "Мы свяжемся с вами в ближайшее время",'success');
+                    $('form')[0].reset();
+                }
+                else{
+                    $.each(res,function (k,v) {
+                        var $input = $('input[name="'+k+'"]');
+                        $input.closest('.form-group').addClass('has-error');
+                        $.each(v,function () {
+                            $input.siblings('.help-block').text(this);
+                        });
+
+                    })
+                }
+            },
+            error : function (err) {
+                console.log(err);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-3">
+        <div class="mnu_wrap hidden-md-up">
+            <button class="toggle_mnu">
+					<span class="sandwich">
+						<span class="sw-topper"></span>
+						<span class="sw-bottom"></span>
+						<span class="sw-footer"></span>
+					</span>
+            </button>
+        </div>
+        <div class="logo_wrap">
+            <a href="/">
+                <img src="/assets/images/mblogo.png" alt="АН Редл"/>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-9 mnu_col">
+        <nav>
+            <ul>
+                <li><a class="<?= $this->activeMenuItem == 'prodazha' ? 'active' : '' ?>" href="/prodazha-kvartir-kiev">Продажа</a></li>
+                <li><a class="<?= $this->activeMenuItem == 'arenda' ? 'active' : '' ?>" href="/arenda-kvartir-kiev">Аренда</a></li>
+                <li><a class="<?= $this->activeMenuItem == 'newhouse' ? 'active' : '' ?>" href="/newhouse">Новостройки</a></li>
+                <li><a class="<?= $this->activeMenuItem == 'news' ? 'active' : '' ?>" href="/news">Новости</a></li>
+                <li><a class="<?= $this->activeMenuItem == 'contacts' ? 'active' : '' ?>" href="/contacts">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".toggle_mnu").click(function() {
+            $(".sandwich").toggleClass("active");
+            $("html,body").toggleClass("overh");
+            $(".mnu_col").slideToggle(10);
+        });
+    });
+
+</script>

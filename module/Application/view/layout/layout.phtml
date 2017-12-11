@@ -1,0 +1,48 @@
+<?= $this->doctype() ?>
+
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle($this->pageTitle) ?>
+
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+//        ->prependStylesheet($this->basePath('css/x-select.css'))
+        ->prependStylesheet($this->basePath('lib/x-select/css/x-select.css'))
+        ->prependStylesheet($this->basePath('css/media.css'))
+        ->prependStylesheet($this->basePath('css/style.css'))
+        ->prependStylesheet($this->basePath('assets/css/pages/index/main.css'))
+        ->prependStylesheet('https://fonts.googleapis.com/css?family=Lato')
+        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ->prependStylesheet($this->basePath('lib/font-awesome-4.7.0/css/font-awesome.min.css'))
+    ?>
+
+</head>
+<body>
+<?= $this->content ?>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2005 - <?= date('Y') ?> by Redl Ltd. All rights reserved.</p>
+
+    </div>
+</footer>
+
+
+<!-- Scripts -->
+<?= $this->inlineScript()
+    ->prependFile($this->basePath('js/common.js'))
+    ->prependFile($this->basePath('assets/js/pages/index/script.js'))
+    ->prependFile($this->basePath('lib/x-select/js/x-select.js'))
+    ->prependFile($this->basePath('js/mixitup.min.js'))
+    ->prependFile($this->basePath('js/bootstrap.min.js'))
+    ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+?>
+
+<?//= $this->inlineScript() ?>
+</body>
+</html>

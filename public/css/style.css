@@ -1,0 +1,228 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-family: 'Lato','Roboto Condensed', sans-serif;
+}
+body{
+    font-size:18px;
+    background: #f4f4f4;
+    color: #000;
+    min-width: 320px;
+}
+.overh{
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+img{
+    width: 100%;
+}
+.container{
+    max-width: 1080px;
+}
+.nopadding{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.redl-btn{
+    display: inline-block;
+    padding: 0 15px;
+    line-height: 30px;
+    cursor: pointer;
+    font-size: .9em;
+}
+.redl-btn.red{
+    background: transparent;
+    outline: none;
+    color: #000;
+    border: solid 2px #d64521;
+    transition: background 700ms;
+    transition: color 200ms;
+}
+.redl-btn.red:hover{
+    background: #d64521;
+    color: #fff;
+}
+header h1{
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+}
+header p{
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+}
+
+.mnu_wrap{
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 5px;
+}
+.toggle_mnu {
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*background: #d64521;*/
+    /*background: #353535;*/
+    background: transparent;
+    outline:none!important;
+    /*position: relative;*/
+    /*z-index: 100;*/
+    border: none;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.toggle_mnu span {
+    display: block; }
+
+.sandwich {
+    width: 28px;
+    height: 28px;
+    outline:none;
+    /*position: absolute;*/
+    /*top: 8px;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*margin: auto;*/
+    /*z-index: 200; */
+}
+.sw-topper {
+    position: relative;
+    top: 0;
+    width: 28px;
+    height: 3px;
+    background: white;
+    border: none;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-transition: -webkit-transform 0.5s, top 0.2s;
+    transition: transform 0.5s, top 0.2s;
+    display: block; }
+
+svg path {
+    fill: #e0e0e0; }
+
+.sw-bottom {
+    position: relative;
+    width: 28px;
+    height: 3px;
+    top: 6.6px;
+    background: white;
+    border: none;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-transition: -webkit-transform 0.5s, top 0.2s;
+    transition: transform 0.5s, top 0.2s;
+    -webkit-transition-delay: 0.2s, 0s;
+    transition-delay: 0.2s, 0s; }
+
+.sw-footer {
+    position: relative;
+    width: 28px;
+    height: 3px;
+    top: 13.5px;
+    background: white;
+    border: none;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s; }
+
+.sandwich.active .sw-topper {
+    top: 9px;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
+.sandwich.active .sw-bottom {
+    top: 6px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg); }
+.sandwich.active .sw-footer {
+    opacity: 0;
+    top: 0;
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg); }
+
+ul{
+    list-style: none;
+    margin: 0;
+}
+nav ul li{
+    display: inline-block;
+    padding: 0 15px;
+}
+.bredcrumbs-wrap{
+    margin-top: 15px;
+}
+.bredcrumbs-item{
+    color: #666;
+    font-size: .8em;
+    text-decoration: none !important;
+    display: inline-block;
+}
+p.bredcrumbs-item{
+    cursor: default;
+    color: #000;
+}
+.bredcrumbs-item:hover{
+    color: #000;
+}
+.bredcrumbs span{
+    font-size: .8em;
+    color: #666;
+}
+.pagination:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.pagination li{
+    padding: 0;
+    float: left;
+}
+.pagination li b,.pagination li a,.pagination li a:hover,.pagination li span,.pagination li span:hover{
+    color: #d64521;
+}
+.pagination li span:hover{
+    cursor: default;
+}
+footer{
+    background: #4A5258;
+    color: #fff;
+}
+footer p{
+    font-size: .8em;
+    margin: 0;
+    line-height: 60px;
+}
+
+.contacts-page h1{
+    font-size: 2em;
+    margin: 40px 0;
+}
+.title{
+    font-size: 1.3em;
+}
+.s1{
+    font-size: .9em;
+    margin: 0;
+}
+.contact-line p{
+    display: inline-block;
+    line-height: 35px;
+}
+.contact-line .fa{
+    color: #d64521;
+    font-size: 1.4em;
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 30px;
+}
+.contact-line.addr .fa{
+    font-size: 1.8em;
+}

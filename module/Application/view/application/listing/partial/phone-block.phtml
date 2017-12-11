@@ -1,0 +1,59 @@
+<script>
+    function getTT(el) {
+        for (var i = 0; i < el.childNodes.length; i++) {
+            console.log(el.childNodes[i].className);
+            if (el.childNodes[i].className == "tt") {
+                return el.childNodes[i];
+            }
+        }
+    }
+    function showTT(el) {
+        var tt = getTT(el);
+        tt.style.display = 'block';
+    }
+    function hideTT(el) {
+        var tt = getTT(el);
+        tt.style.display = 'none';
+    }
+    function toggleTT(el) {
+        var tt = getTT(el);
+        var display = window.getComputedStyle(tt).display;
+        if(display == 'none')
+        {
+            tt.style.display = 'block';
+        }
+        else
+        {
+            tt.style.display = 'none';
+        }
+    }
+</script>
+
+<?php
+$isMobile = preg_match("~(iPhone|Android)~",$_SERVER['HTTP_USER_AGENT']);
+?>
+<div class="line-detail-wrap">
+    <div class="line-detail-item-wrap with_phone">
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0689400376">068 940-03-76</a>' : '068 940-03-76' ?></span></p>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://073 738-87-87">068 940-03-76</a>' : '073 738-87-87' ?></span></p>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0689400376">095 282-00-82</a>' : '095 282-00-82' ?></span></p>
+    </div>
+    <div class="line-detail-item-wrap">
+        <div class="selection_wrap">
+            <div data-toggle="modal" data-target="#modal_selection" class="redl-btn red">
+                Заказать подбор
+            </div>
+            <div class="info-block" onclick="toggleTT(this);" onmouseover="showTT(this)" onmouseleave="hideTT(this)">
+                <div class="icon">
+                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                </div>
+
+                <div class="tt">
+                    <p>
+                        Укажите свои пожелания и наши специалисты подберут то что вам нужно.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

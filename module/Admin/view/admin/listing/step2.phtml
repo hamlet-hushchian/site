@@ -1,0 +1,260 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title"><?= $this->isEdit ? 'Редактировать объявление' : 'Добавить объявление' ?></h1>
+        <p class="description">Здесь вы можете <?= $this->isEdit ? 'отредактировать' : 'добавить новое' ?> объявление. Не забудтье заполнить все обязательные
+            поля. </p>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="dashboard-1.html"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+
+                <a href="forms-native.html">Forms</a>
+            </li>
+            <li class="active">
+
+                <strong>Form Wizard</strong>
+            </li>
+        </ol>
+
+    </div>
+
+</div>
+
+<?= $this->form()->openTag($form); ?>
+<div id="rootwizard" class="form-wizard">
+    <ul class="tabs">
+        <li id="to1" class="completed">
+            <a href="#fwv-1" data-toggle="tab">
+                Основная информация
+                <span>1</span>
+            </a>
+        </li>
+        <li class="active">
+            <a href="#fwv-2" data-toggle="tab">
+                Дополнительная информация
+                <span>2</span>
+            </a>
+        </li>
+        <li class="tab3">
+            <a href="#fwv-3" data-toggle="tab">
+                Фото и удобства
+                <span>3</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="progress-indicator">
+        <span></span>
+    </div>
+
+    <div class="tab-content no-margin">
+        <!-- Tabs Content -->
+        <div class="tab-pane with-bg active" id="fwv-1">
+            <div class="row">
+                <? foreach ($this->form as $element) {
+                    if ($element->getName() == 'description') {
+                        ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <?= $this->formLabel($element); ?>
+                                <?= $this->formElement($element); ?>
+                                <?= $this->formElementErrors($element); ?>
+                            </div>
+                        </div>
+                    <? } else { ?>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <?= $this->formLabel($element); ?>
+                                <?= $this->formElement($element); ?>
+                                <?= $this->formElementErrors($element); ?>
+                            </div>
+                        </div>
+                    <? }
+                } ?>
+                <div class="col-xs-12">
+                    <ul class="pager wizard">
+                        <li class="previous">
+                            <a href="#"><i class="entypo-left-open"></i> Предидущий шаг</a>
+                        </li>
+                        <li class="next"><a href="#">Следующий шаг <i class="entypo-right-open"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--            <div class="row">-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('q_rooms')); ?>
+            <!--                        --><? //= $this->formElement($form->get('q_rooms')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('q_rooms')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('san_node')); ?>
+            <!--                        --><? //= $this->formElement($form->get('san_node')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('san_node')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('common_square')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('common_square')); ?>
+            <!--                        --><? //= $this->formElement($form->get('common_square')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('common_square')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('real_square')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('real_square')); ?>
+            <!--                        --><? //= $this->formElement($form->get('real_square')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('real_square')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('kitchen_square')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('kitchen_square')); ?>
+            <!--                        --><? //= $this->formElement($form->get('kitchen_square')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('kitchen_square')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('balkon_square')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('balkon_square')); ?>
+            <!--                        --><? //= $this->formElement($form->get('balkon_square')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('balkon_square')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-12">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('description')); ?>
+            <!--                        --><? //= $this->formElement($form->get('description')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('description')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('price')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('price')); ?>
+            <!--                        --><? //= $this->formElement($form->get('price')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('price')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('currency')); ?>
+            <!--                        --><? //= $this->formElement($form->get('currency')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('currency')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('level')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('level')); ?>
+            <!--                        --><? //= $this->formElement($form->get('level')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('level')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group -->
+            <? //= $this->formElementErrors($form->get('levels')) !== '' ? 'has-error' : '' ?><!--">-->
+            <!--                        --><? //= $this->formLabel($form->get('levels')); ?>
+            <!--                        --><? //= $this->formElement($form->get('levels')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('levels')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('build_type')); ?>
+            <!--                        --><? //= $this->formElement($form->get('build_type')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('build_type')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('plan')); ?>
+            <!--                        --><? //= $this->formElement($form->get('plan')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('plan')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('type_wall')); ?>
+            <!--                        --><? //= $this->formElement($form->get('type_wall')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('type_wall')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('type_window')); ?>
+            <!--                        --><? //= $this->formElement($form->get('type_window')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('type_window')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <div class="form-group">-->
+            <!--                        --><? //= $this->formLabel($form->get('type_warm')); ?>
+            <!--                        --><? //= $this->formElement($form->get('type_warm')); ?>
+            <!--                        --><? //= $this->formElementErrors($form->get('type_warm')); ?>
+            <!--                    </div>-->
+            <!--                </div>-->
+<!--                            <div class="col-xs-12">-->
+<!--                                <ul class="pager wizard">-->
+<!--                                    <li class="previous">-->
+<!--                                        <a href="#"><i class="entypo-left-open"></i> Предидущий шаг</a>-->
+<!--                                    </li>-->
+<!--                                    <li class="next"><a href="#">Следующий шаг <i class="entypo-right-open"></i></a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag(); ?>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var el = $('.form-wizard'),
+            $tabs = el.find('> ul > li'),
+            $progress = el.find('.progress-indicator'),
+            _index = el.find('ul li.active').index();
+
+        if (_index > 0) {
+            $progress.css({width: _index / $tabs.length * 100 + '%'});
+            $tabs.removeClass('completed').slice(0, _index).addClass('completed');
+        }
+
+        $('.next a, .tab3').click(function (e) {
+            e.preventDefault();
+            $('#add_listing-from').submit();
+        });
+        $('#to1,.previous').click(function () {
+            swal({
+                    title: "Вы уверены?",
+                    text: "Все данные введенные на этом этапе не сохранятся",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Да, уверен!",
+                    cancelButtonText: "Отмена",
+                    closeOnConfirm: false
+                },
+                function () {
+                    window.location.href = '?step=1';
+                });
+        })
+    });
+</script>
+
