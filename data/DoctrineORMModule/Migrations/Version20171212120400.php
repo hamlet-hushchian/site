@@ -27,7 +27,7 @@ class Version20171212120400 extends AbstractMigration
     public function postUp(Schema $schema)
     {
         $add_city_sql = "INSERT INTO cities (`name`,`name_lat`) VALUES ('Киев','Kiev')";
-        $this->addSql($add_city_sql);
+        $this->connection->executeQuery($add_city_sql);
     }
 
     /**
