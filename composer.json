@@ -24,7 +24,8 @@
         "sybio/image-workshop": "^2.0",
         "zendframework/zend-hydrator": "^2.2",
         "zendframework/zend-paginator": "^2.8",
-        "zendframework/zend-feed": "^2.9"
+        "zendframework/zend-feed": "^2.9",
+        "doctrine/migrations": "^1.5"
     },
     "autoload": {
         "psr-4": {
