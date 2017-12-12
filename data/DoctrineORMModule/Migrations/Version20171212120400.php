@@ -22,7 +22,10 @@ class Version20171212120400 extends AbstractMigration
         $table->addColumn('name_lat', 'text', ['notnull'=>true]);
         $table->setPrimaryKey(['id']);
         $table->addOption('engine' , 'InnoDB');
+    }
 
+    public function postUp(Schema $schema)
+    {
         $add_city_sql = "INSERT INTO cities (`name`,`name_lat`) VALUES ('Киев','Kiev')";
         $this->addSql($add_city_sql);
     }
