@@ -85,7 +85,7 @@ class Version20171212120400 extends AbstractMigration
         //Create table listing_images
         $table = $schema->createTable('listing_images');
         $table->addColumn('id', 'integer', ['autoincrement'=>true]);
-        $table->addColumn('uniq_id', 'varchar', ['notnull'=>true]);
+        $table->addColumn('uniq_id', 'text', ['notnull'=>true]);
         $table->addColumn('listing_id', 'integer', ['notnull'=>true]);
         $table->addColumn('source_link', 'text', ['notnull'=>true]);
         $table->addColumn('thumb_link', 'text', ['notnull'=>true]);
