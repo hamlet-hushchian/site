@@ -40,7 +40,6 @@ class ListingManager
         return $this->entityManager->getRepository(Listing::class)->getSearchResult($d_type,$p_type,$city,$params);
     }
 
-
     public function save($sessionContainer)
     {
         //1. Save Listing
@@ -330,6 +329,16 @@ class ListingManager
             $this->entityManager->remove($paramValue);
         }
         $this->entityManager->remove($listing);
+        $this->entityManager->flush();
+        die('success');
+    }
+
+    public function updateListing($id)
+    {
+        $listing = $this->entityManager->getRepository(Listing::class)->findOneById($id);
+        $now = date('Y-m-d H:i:s');
+        $listing->setDateEdit($now);
+        $this->entityManager->merge($listing);
         $this->entityManager->flush();
         die('success');
     }

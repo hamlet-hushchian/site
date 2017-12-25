@@ -47,7 +47,7 @@
 
                     </div>
                     <h4>
-                        <?= $listing->getStreet() ?>, <?= $listing->getHouseNumber() ?>
+                        <a href="/listing/<?=$listing->getId()?>" target="_blank"> <?= $listing->getStreet() ?>, <?= $listing->getHouseNumber() ?></a>
                     </h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
@@ -62,6 +62,8 @@
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <p>ID: <?= $listing->getId() ?> </p>
+                            <p>Район: <?= $listing->getMicrodistrict()->getDistrict()->getName() ?></p>
+                            <p>Микрорайон: <?= $listing->getMicrodistrict()->getName() ?></p>
 
                         </div>
                     </div>
@@ -84,6 +86,7 @@
                             <li><a href="#">Деактивировать</a></li>
                             <li><a href="#" data-action="delete">Удалить</a></li>
                             <li><a href="#">Прозвон</a></li>
+                            <li><a href="#" data-action="update">Обновить</a></li>
 <!--                            <li class="divider"></li>-->
 <!--                            <li><a href="#">Separated link</a></li>-->
                         </ul>
@@ -120,13 +123,25 @@
                     type: "POST",
                     data: 'delete&id='+id,
                     success:function (res) {
-                        console.log(res);
                         if(res == 'success')
                             window.location.reload();
                     }
                 });
             });
 
+        }
+        if(action == 'update')
+        {
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: 'update&id='+id,
+                success:function (res) {
+                    console.log(res);
+                    if(res == 'success')
+                        window.location.reload();
+                }
+            });
         }
     });
 

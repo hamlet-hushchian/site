@@ -34,9 +34,15 @@ $isMobile = preg_match("~(iPhone|Android)~",$_SERVER['HTTP_USER_AGENT']);
 ?>
 <div class="line-detail-wrap">
     <div class="line-detail-item-wrap with_phone">
-        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0689400376">068 940-03-76</a>' : '068 940-03-76' ?></span></p>
-        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://073 738-87-87">068 940-03-76</a>' : '073 738-87-87' ?></span></p>
-        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0689400376">095 282-00-82</a>' : '095 282-00-82' ?></span></p>
+        <?if(!$this->microdistrict){?>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0676872115">067 687-21-15</a>' : '067 687-21-15' ?></span></p>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0634118468">063 411-84-68</a>' : '063 411-84-68' ?></span></p>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0990178728">099 017-87-28</a>' : '099 017-87-28' ?></span></p>
+        <?}else{?>
+            <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0689400376">068 940-03-76</a>' : '068 940-03-76' ?></span></p>
+            <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0737388787">073 738-87-87</a>' : '073 738-87-87' ?></span></p>
+            <p><i class="fa fa-phone" aria-hidden="true"></i> <span><?= $isMobile ? '<a href="tel://0952820082">095 282-00-82</a>' : '095 282-00-82' ?></span></p>
+        <?}?>
     </div>
     <div class="line-detail-item-wrap">
         <div class="selection_wrap">

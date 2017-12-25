@@ -5,12 +5,20 @@
         <div class="row listing-content">
             <div class="col-xs-12 col-sm-6 img-wrap">
                 <img src="<?= count($this->listing->getImages()) > 0 ? $this->listing->getImages()[0]->getThumbLink() : '/assets/images/noimage.jpg'?>" />
-                <div class="price-label">UAH <?=$this->listing->getPrice()['uah']?></div>
+                <?if($this->listing->getDealType()->getName() == 'Аренда'){?>
+                    <div class="price-label">$ <?=$this->listing->getPrice()['usd']?></div>
+                <?}else{?>
+                    <div class="price-label">UAH <?=$this->listing->getPrice()['uah']?></div>
+                <?}?>
                 <div class="price-label">€ <?=$this->listing->getPrice()['eur']?></div>
             </div>
             <div class="col-xs-12 col-sm-6 info-wrap">
                 <div class="price">
-                    $ <?=$this->listing->getPrice()['usd']?>
+                    <?if($this->listing->getDealType()->getName() == 'Аренда'){?>
+                        UAH <?=$this->listing->getPrice()['uah']?>
+                    <?}else{?>
+                        $ <?=$this->listing->getPrice()['usd']?>
+                    <?}?>
                 </div>
                 <div class="descr">
                     <?=

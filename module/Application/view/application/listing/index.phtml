@@ -100,7 +100,7 @@
             </div>
             <div class="row hidden-md hidden-lg">
                 <div class="col-xs-12">
-                    <?= $this->partial('application/listing/partial/phone-block');?>
+                    <?= $this->partial('application/listing/partial/phone-block',['microdistrict' => $this->listing->getMicrodistrict()->getName()]);?>
                 </div>
                 <div class="col-xs-12  ">
                     <?= $this->partial('application/listing/partial/params-block',['paramsValue' => $this->listing->getParamsValue()]);?>
@@ -136,7 +136,7 @@
         </div>
 
         <div class="col-xs-12 side_block col-md-4 col-lg-3 hidden-xs hidden-sm">
-            <?= $this->partial('application/listing/partial/phone-block');?>
+            <?= $this->partial('application/listing/partial/phone-block',['microdistrict' => $this->listing->getMicrodistrict()->getName()]);?>
             <?= $this->partial('application/listing/partial/params-block',['paramsValue' => $this->listing->getParamsValue()]);?>
         </div>
 
