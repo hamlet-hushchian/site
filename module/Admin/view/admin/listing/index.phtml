@@ -24,6 +24,154 @@
     </div>
 
 </div>
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Фильтр</h3>
+                <div class="panel-options">
+                    <a href="#" data-toggle="panel">
+                        <span class="collapse-icon">&ndash;</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <form role="form" class="row">
+
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="control-label">Тип Сделки</label>
+
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($)
+                            {
+                                $("#sboxit-1").selectBoxIt({
+                                    showFirstOption: false
+                                }).on('open', function()
+                                {
+                                    // Adding Custom Scrollbar
+                                    $(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+                                });
+                            });
+                        </script>
+
+                        <select class="form-control" id="sboxit-1">
+                            <option>Выбрать тип</option>
+                            <option value="au">Продажа</option>
+                            <option value="bd">Аренда</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="control-label">Тип недвижимости</label>
+
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($)
+                            {
+                                $("#sboxit-2").selectBoxIt({
+                                    showFirstOption: false
+                                }).on('open', function()
+                                {
+                                    // Adding Custom Scrollbar
+                                    $(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+                                });
+                            });
+                        </script>
+
+                        <select class="form-control" id="sboxit-2">
+                            <option>Выбрать тип</option>
+                            <option value="al">Квартира</option>
+                            <option value="au">Комната</option>
+                            <option value="bd">Дом</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="control-label">Native dropdown menu</label>
+
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($)
+                            {
+                                $("#sboxit-3").selectBoxIt({
+                                    showFirstOption: false,
+                                    "native": true
+                                });
+                            });
+                        </script>
+
+                        <select class="form-control" id="sboxit-3">
+                            <option>Select your country</option>
+                            <option value="al">Albania</option>
+                            <option value="au">Australia</option>
+                            <option value="bd">Bandgladesh</option>
+                            <option value="br">Brasil</option>
+                            <option value="ca">Canada</option>
+                            <option value="cn">China</option>
+                            <option value="de">Germany</option>
+                            <option value="fr">France</option>
+                            <option value="gr">Greece</option>
+                            <option value="jp">Japan</option>
+                            <option value="xk">Kosovo</option>
+                            <option value="nl">Netherlands</option>
+                            <option value="no">Norway</option>
+                            <option value="ru">Russia</option>
+                            <option value="se">Sweden</option>
+                            <option value="tr">Turkey</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="us">United States</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="control-label">Show and hide with effects</label>
+
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($)
+                            {
+                                $("#sboxit-4").selectBoxIt({
+                                    showEffect: 'fadeIn',
+                                    hideEffect: 'fadeOut'
+                                });
+                            });
+                        </script>
+
+                        <select class="form-control" id="sboxit-4">
+                            <option>Select your country</option>
+                            <option value="al">Albania</option>
+                            <option value="au">Australia</option>
+                            <option value="bd">Bandgladesh</option>
+                            <option value="br">Brasil</option>
+                            <option value="ca">Canada</option>
+                            <option value="cn">China</option>
+                            <option value="de">Germany</option>
+                            <option value="fr">France</option>
+                            <option value="gr">Greece</option>
+                            <option value="jp">Japan</option>
+                            <option value="xk">Kosovo</option>
+                            <option value="nl">Netherlands</option>
+                            <option value="no">Norway</option>
+                            <option value="ru">Russia</option>
+                            <option value="se">Sweden</option>
+                            <option value="tr">Turkey</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="us">United States</option>
+                        </select>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div class="listings_wrap row">
     <?
@@ -149,3 +297,6 @@
 
     });//End of document ready
 </script>
+
+<script src="/assets/js/jquery-ui/jquery-ui.min.js"></script>
+<script src="/assets/js/selectboxit/jquery.selectBoxIt.min.js"></script>
