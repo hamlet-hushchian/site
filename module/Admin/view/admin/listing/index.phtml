@@ -52,8 +52,8 @@
 
                             <select class="form-control" id="sboxit-1">
                                 <option>Выбрать тип</option>
-                                <option value="au">Продажа</option>
-                                <option value="bd">Аренда</option>
+                                <option value="prodazha">Продажа</option>
+                                <option value="arenda">Аренда</option>
                             </select>
 
                         </div>
@@ -69,9 +69,9 @@
 
                             <select class="form-control" id="sboxit-2">
                                 <option>Выбрать тип</option>
-                                <option value="al">Квартира</option>
-                                <option value="au">Комната</option>
-                                <option value="bd">Дом</option>
+                                <option value="kvartira">Квартира</option>
+                                <option value="komnat">Комната</option>
+                                <option value="domov">Дом</option>
                             </select>
 
                         </div>
@@ -85,7 +85,7 @@
                                 });
                             </script>
 
-                            <select class="form-control" id="sboxit-3">
+                            <select class="form-control" id="sboxit-3" name="district">
                                 <option>Выбрать район</option>
                                 <? foreach ($this->districts as $district): ?>
                                     <option value="<?= $district->getNameLat() ?>"><?= $district->getName() ?></option>
@@ -112,7 +112,7 @@
 
                         </div>
                     </div>
-                    <div class="row x-select-wrap">
+                    <div class="row x-select-wrap ">
                         <div class="form-group col-xs-12 col-md-3">
                             <label class="control-label">К-во комнат</label>
                             <div id="rooms" data-default="Комнат" data-parent="rooms"
@@ -127,6 +127,68 @@
                                     <div data-value="6" class="x-select-tt-item ">6+ комнатная</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-xs-12 col-md-3">
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                        <label class="control-label">Цена От</label>
+                                        <input type="text" class="form-control" name="pricefrom" placeholder="От">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label class="control-label">Цена До</label>
+                                    <input type="text" class="form-control" id="priceto" placeholder="До">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-md-1">
+                            <label class="control-label">Валюта</label>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function ($) {
+                                    $("#sboxit-currency").selectBoxIt();
+                                });
+                            </script>
+
+                            <select class="form-control" id="sboxit-currency">
+                                <option>USD</option>
+                                <option>UAH</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-md-2">
+                            <div class="row">
+                                <div class="col-xs-9" style="padding-right: 0;">
+                                    <label class="control-label">Поиск по ID</label>
+                                    <input type="text" class="form-control" name="pricefrom" placeholder="Введите ID">
+                                </div>
+                                <div class="col-xs-3" style="padding-left: 0; margin-top: 23px;">
+                                    <button class="btn btn-icon btn-success" style="height: 32px;">
+                                        <i class="fa-search" style="padding: 0;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-xs-12 col-md-3" style="margin-top: 30px;">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <button class="btn btn-secondary btn-icon btn-icon-standalone">
+                                        <i class="fa-filter"></i>
+                                        <span>Показать</span>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button class="btn btn-red btn-icon btn-icon-standalone">
+                                        <i class="fa-remove"></i>
+                                        <span>Сбросить фильтр</span>
+                                    </button>
+                                </div>
+
+
+                            </div>
+
                         </div>
 
                     </div>
@@ -216,6 +278,11 @@
     ?>
 </div>
 
+<?= $this->paginationControl($this->listings,
+    'Sliding',
+    'admin/partial/paginator',
+    ['route' => 'listings']); ?>
+
 <script>
     $(document).on('click', '.dropdown-menu li a', function (e) {
         e.preventDefault();
@@ -261,7 +328,17 @@
 
     $(document).ready(function () {
         $($('.panel-body form')[0]).xSelect();
+//        slink();
+        $('select').change(function () {
+            slink();
+        })
     });//End of document ready
+    
+    function slink() {
+        $.each($('select'),function () {
+            console.log($(this).val());
+        })
+    }
 </script>
 
 <link rel="stylesheet" href="/lib/x-select/css/x-select.css">

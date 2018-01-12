@@ -133,6 +133,18 @@ class ListingRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function getListingsForAdmin()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('l')
+            ->from(Listing::class, 'l')
+            ->orderBy('l.id', 'DESC');
+
+        return $qb->getQuery();
+    }
+
     private function formatStreet($street)
     {
         $street = explode(',', $street);

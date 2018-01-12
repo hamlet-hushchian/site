@@ -9,6 +9,9 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\AddListingForm;
 use Admin\Entity\Listing;
 use Admin\Entity\Listingx;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator;
 
 Class ListingController extends AbstractActionController
 {
@@ -53,12 +56,22 @@ Class ListingController extends AbstractActionController
                 $this->listingManager->updateListing($this->params()->fromPost('id'));
             }
         }
-        $listings = $this->entityManager->getRepository(Listing::class)->getAllListings();
+
+        $page = $this->params()->fromQuery('page', 1);
+        $query = $this->entityManager->getRepository(Listing::class)
+            ->getListingsForAdmin();
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(1);
+        $paginator->setCurrentPageNumber($page);
+
+//        $listings = $this->entityManager->getRepository(Listing::class)->getAllListings();
         $districts = $this->entityManager->getRepository(District::class)->findAll();
         $microdistricts = $this->entityManager->getRepository(Microdistrict::class)->findByDistrict($districts[0]);
         $this->layout()->setVariable('activeMenuItem', 'menu_all');
         return new ViewModel([
-            'listings' => $listings,
+            'listings' => $paginator,
             'districts' => $districts,
             'microdistricts' => $microdistricts,
         ]);
