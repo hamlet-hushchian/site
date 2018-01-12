@@ -2,6 +2,8 @@
 
 namespace Admin\Controller;
 
+use Admin\Entity\District;
+use Admin\Entity\Microdistrict;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\AddListingForm;
@@ -52,9 +54,13 @@ Class ListingController extends AbstractActionController
             }
         }
         $listings = $this->entityManager->getRepository(Listing::class)->getAllListings();
+        $districts = $this->entityManager->getRepository(District::class)->findAll();
+        $microdistricts = $this->entityManager->getRepository(Microdistrict::class)->findByDistrict($districts[0]);
         $this->layout()->setVariable('activeMenuItem', 'menu_all');
         return new ViewModel([
             'listings' => $listings,
+            'districts' => $districts,
+            'microdistricts' => $microdistricts,
         ]);
     }
 

@@ -24,6 +24,122 @@
     </div>
 
 </div>
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Фильтр</h3>
+                <div class="panel-options">
+                    <a href="#" data-toggle="panel">
+                        <span class="collapse-icon">&ndash;</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-3">
+                            <label class="control-label">Тип Сделки</label>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function ($) {
+                                    $("#sboxit-1").selectBoxIt();
+                                });
+                            </script>
+
+                            <select class="form-control" id="sboxit-1">
+                                <option>Выбрать тип</option>
+                                <option value="au">Продажа</option>
+                                <option value="bd">Аренда</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-xs-12 col-md-3">
+                            <label class="control-label">Тип недвижимости</label>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function ($) {
+                                    $("#sboxit-2").selectBoxIt();
+                                });
+                            </script>
+
+                            <select class="form-control" id="sboxit-2">
+                                <option>Выбрать тип</option>
+                                <option value="al">Квартира</option>
+                                <option value="au">Комната</option>
+                                <option value="bd">Дом</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-xs-12 col-md-3">
+                            <label class="control-label">Район</label>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function ($) {
+                                    $("#sboxit-3").selectBoxIt();
+                                });
+                            </script>
+
+                            <select class="form-control" id="sboxit-3">
+                                <option>Выбрать район</option>
+                                <? foreach ($this->districts as $district): ?>
+                                    <option value="<?= $district->getNameLat() ?>"><?= $district->getName() ?></option>
+                                <? endforeach; ?>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-xs-12 col-md-3">
+                            <label class="control-label">Микрорайон</label>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function ($) {
+                                    $("#sboxit-4").selectBoxIt();
+                                });
+                            </script>
+
+                            <select class="form-control" id="sboxit-4">
+                                <option>Выбрать микрорайон</option>
+                                <? foreach ($this->microdistricts as $microdistrict): ?>
+                                    <option value="<?= $microdistrict->getNameLat() ?>"><?= $microdistrict->getName() ?></option>
+                                <? endforeach; ?>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row x-select-wrap">
+                        <div class="form-group col-xs-12 col-md-3">
+                            <label class="control-label">К-во комнат</label>
+                            <div id="rooms" data-default="Комнат" data-parent="rooms"
+                                 class="x-select-item-wrap checker col-xs-12">
+                                <div value="null" class="x-select">Комнат</div>
+                                <div class="x-select-tt">
+                                    <div data-value="1" class="x-select-tt-item ">1 комнатная</div>
+                                    <div data-value="2" class="x-select-tt-item ">2 комнатная</div>
+                                    <div data-value="3" class="x-select-tt-item ">3 комнатная</div>
+                                    <div data-value="4" class="x-select-tt-item ">4 комнатная</div>
+                                    <div data-value="5" class="x-select-tt-item ">5 комнатная</div>
+                                    <div data-value="6" class="x-select-tt-item ">6+ комнатная</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div class="listings_wrap row">
     <?
@@ -31,13 +147,12 @@
         $params = [];
         foreach ($listing->getParamsValue() as $k => $paramValue) {
 
-            if(is_int($k))
-            {
+            if (is_int($k)) {
                 $params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
             }
         }
         ?>
-        <div class="col-xs-12 listing_wrap" data-id="<?=$listing->getId()?>">
+        <div class="col-xs-12 listing_wrap" data-id="<?= $listing->getId() ?>">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-2 image_wrap">
                     <img src="<?= count($listing->getImages()) > 0 ? $listing->getImages()[0]->getThumbLink() : '/assets/images/noimage.jpg' ?>"/>
@@ -47,7 +162,8 @@
 
                     </div>
                     <h4>
-                        <a href="/listing/<?=$listing->getId()?>" target="_blank"> <?= $listing->getStreet() ?>, <?= $listing->getHouseNumber() ?></a>
+                        <a href="/listing/<?= $listing->getId() ?>" target="_blank"> <?= $listing->getStreet() ?>
+                            , <?= $listing->getHouseNumber() ?></a>
                     </h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
@@ -87,8 +203,8 @@
                             <li><a href="#" data-action="delete">Удалить</a></li>
                             <li><a href="#">Прозвон</a></li>
                             <li><a href="#" data-action="update">Обновить</a></li>
-<!--                            <li class="divider"></li>-->
-<!--                            <li><a href="#">Separated link</a></li>-->
+                            <!--                            <li class="divider"></li>-->
+                            <!--                            <li><a href="#">Separated link</a></li>-->
                         </ul>
                     </div>
                 </div>
@@ -101,12 +217,11 @@
 </div>
 
 <script>
-    $(document).on('click','.dropdown-menu li a',function (e) {
+    $(document).on('click', '.dropdown-menu li a', function (e) {
         e.preventDefault();
         var action = $(this).data('action');
         var id = $(this).closest(".listing_wrap").data("id");
-        if (action == 'delete')
-        {
+        if (action == 'delete') {
             swal({
                 title: "Вы уверены?",
                 text: "Объявление будет полностью удалено!",
@@ -116,29 +231,28 @@
                 confirmButtonText: "Да",
                 cancelButtonText: "Отмена",
                 confirmButtonColor: "#ec6c62"
-            }, function() {
+            }, function () {
                 console.log("confirmed");
                 $.ajax({
                     url: "",
                     type: "POST",
-                    data: 'delete&id='+id,
-                    success:function (res) {
-                        if(res == 'success')
+                    data: 'delete&id=' + id,
+                    success: function (res) {
+                        if (res == 'success')
                             window.location.reload();
                     }
                 });
             });
 
         }
-        if(action == 'update')
-        {
+        if (action == 'update') {
             $.ajax({
                 url: "",
                 type: "POST",
-                data: 'update&id='+id,
-                success:function (res) {
+                data: 'update&id=' + id,
+                success: function (res) {
                     console.log(res);
-                    if(res == 'success')
+                    if (res == 'success')
                         window.location.reload();
                 }
             });
@@ -146,6 +260,31 @@
     });
 
     $(document).ready(function () {
-
+        $($('.panel-body form')[0]).xSelect();
     });//End of document ready
 </script>
+
+<link rel="stylesheet" href="/lib/x-select/css/x-select.css">
+<style>
+    .x-select-item-wrap{
+        border: 1px solid #e4e4e4;
+        font-size: 1.3rem;
+        line-height: 13px;
+        margin: 0;
+        font: 13px Helvetica, Arial;
+        color: #7d7f7f;
+    }
+    .x-select-item-wrap.checker .x-select-tt-item:before{
+        background: url(/assets/images/cbx-sprite-green.png) no-repeat;
+        width: 16px;
+        height: 16px;
+        background-size: 32px;
+        background-position: -16px;
+    }
+
+</style>
+
+<script src="/assets/js/jquery-ui/jquery-ui.min.js"></script>
+<script src="/assets/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+<script src="/lib/x-select/js/x-select.new.js"></script>
+
