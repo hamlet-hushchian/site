@@ -45,41 +45,69 @@ Class ListingController extends AbstractActionController
 
     public function indexAction()
     {
-        if ($this->getRequest()->isPost())
-        {
-            if(!is_null($this->params()->fromPost('delete')))
-            {
+        if ($this->getRequest()->isPost()) {
+            if (!is_null($this->params()->fromPost('delete'))) {
                 $this->listingManager->deleteListing($this->params()->fromPost('id'));
             }
-            if(!is_null($this->params()->fromPost('update')))
-            {
+            if (!is_null($this->params()->fromPost('update'))) {
                 $this->listingManager->updateListing($this->params()->fromPost('id'));
             }
+            if (!is_null($this->params()->fromPost('getMicrodistrict'))) {
+                $microdistricts = $this->listingManager->getMicrodistrictsByDistrictId($this->params()->fromPost('district'));
+                echo json_encode($microdistricts);
+            }
+            exit();
         }
 
         $page = $this->params()->fromQuery('page', 1);
-        $query = $this->entityManager->getRepository(Listing::class)
-            ->getListingsForAdmin();
 
-        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
-        $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(1);
-        $paginator->setCurrentPageNumber($page);
+        $params = $this->params()->fromQuery();
 
-//        $listings = $this->entityManager->getRepository(Listing::class)->getAllListings();
+
+        if ($params['search'])
+        {
+            if($params['rooms'])
+            {
+                preg_match_all("/rooms=([1-6])/",$_SERVER['REQUEST_URI'],$matches);
+                $params['rooms'] = $matches[1];
+            }
+            $query = $this->listingManager->getListingsForAdmin($params);
+        }
+        else
+        {
+            $query = $this->entityManager->getRepository(Listing::class)
+                ->getListingsForAdmin($params);
+        }
+
+        if($params['id'])
+        {
+            $paginator = $this->listingManager->getOneListingForAdmin($params['id']);
+        }
+        else
+        {
+            $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+            $paginator = new Paginator($adapter);
+            $paginator->setDefaultItemCountPerPage(10);
+            $paginator->setCurrentPageNumber($page);
+        }
+
         $districts = $this->entityManager->getRepository(District::class)->findAll();
-        $microdistricts = $this->entityManager->getRepository(Microdistrict::class)->findByDistrict($districts[0]);
+
+        $microdistricts = $params['district'] ? $this->listingManager
+            ->getMicrodistrictsByDistrictId($this->params()->fromQuery('district')) : false;
+
         $this->layout()->setVariable('activeMenuItem', 'menu_all');
         return new ViewModel([
             'listings' => $paginator,
+            'page' => $page,
             'districts' => $districts,
+            'params' => $params,
             'microdistricts' => $microdistricts,
         ]);
     }
 
     public function addAction()
     {
-//        var_dump($this->sessionContainer->userChoises);
         $step = 1;
 
         if (isset($this->sessionContainer->step))
@@ -98,7 +126,7 @@ Class ListingController extends AbstractActionController
                 $this->sessionContainer->userChoises = [];
         }
 
-        $form = new AddListingForm($step, $this->entityManager,$this->sessionContainer->userChoises);
+        $form = new AddListingForm($step, $this->entityManager, $this->sessionContainer->userChoises);
 
         if (isset($this->sessionContainer->userChoises["step$step"])) {
             $data = $this->sessionContainer->userChoises["step$step"];
@@ -113,7 +141,6 @@ Class ListingController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-
 
 
             if ($step == 1) {
@@ -178,8 +205,7 @@ Class ListingController extends AbstractActionController
     {
         $listingId = $this->params()->fromRoute('id');
 
-        if(!isset($this->sessionContainer->editListingId) || $this->sessionContainer->editListingId !== $listingId)
-        {
+        if (!isset($this->sessionContainer->editListingId) || $this->sessionContainer->editListingId !== $listingId) {
             $this->sessionContainer->editData = $this->listingManager->getSessionDataForListing($listingId);
             $this->sessionContainer->editListingId = $listingId;
             $this->sessionContainer->editStep = 1;
@@ -188,15 +214,14 @@ Class ListingController extends AbstractActionController
 
         if (null !== $this->params()->fromQuery('step') && (int)$this->params()->fromQuery('step') <= $step && (int)$this->params()->fromQuery('step') > 0) {
             $this->sessionContainer->editStep = (int)$this->params()->fromQuery('step');
-            return $this->redirect()->toRoute("listings", ['action' => 'edit','id'=>$listingId]);
+            return $this->redirect()->toRoute("listings", ['action' => 'edit', 'id' => $listingId]);
         }
 
-        $form = new AddListingForm($step, $this->entityManager,$this->sessionContainer->editData);
-        if($this->sessionContainer->editData["step$step"])
+        $form = new AddListingForm($step, $this->entityManager, $this->sessionContainer->editData);
+        if ($this->sessionContainer->editData["step$step"])
             $form->setData($this->sessionContainer->editData["step$step"]);
 
-        if ($this->getRequest()->isPost())
-        {
+        if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             if ($step == 3) {
                 $request = $this->getRequest();
@@ -210,12 +235,10 @@ Class ListingController extends AbstractActionController
             $form->setData($data);
 //            var_dump($form->getData);
 //            die('ss');
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $data = $form->getData();
 
-                if($step == 3)
-                {
+                if ($step == 3) {
                     $data['old_listing_images'] = $this->params()->fromPost()['old_listing_images'];
                     $data['old_crop'] = $this->params()->fromPost()['old_crop'];
 //                    $data['old_order'] = $this->params()->fromPost()['old_crop'];
@@ -232,10 +255,8 @@ Class ListingController extends AbstractActionController
                     $this->listingManager->update($this->sessionContainer);
                 }
 
-                return $this->redirect()->toRoute("listings", ['action' => 'edit','id'=>$listingId]);
-            }
-            else
-            {
+                return $this->redirect()->toRoute("listings", ['action' => 'edit', 'id' => $listingId]);
+            } else {
 //                var_dump($form->getMessages());
 //                die();
             }
@@ -254,19 +275,14 @@ Class ListingController extends AbstractActionController
 
     public function ajaxAction()
     {
-        if($this->getRequest()->isXmlHttpRequest())
-        {
-            if ($this->getRequest()->isPost())
-            {
-                if(!is_null($this->params()->fromPost('microdistrict')) && !is_null($this->params()->fromPost('microdistrict')))
-                {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($this->getRequest()->isPost()) {
+                if (!is_null($this->params()->fromPost('microdistrict')) && !is_null($this->params()->fromPost('microdistrict'))) {
                     $microdistricts = $this->listingManager->getMicrodistrictsByDistrictId($this->params()->fromPost('district_id'));
                     echo json_encode($microdistricts);
                 }
             }
-        }
-        else
-        {
+        } else {
             $this->getResponse()->setStatusCode(404);
             return;
         }

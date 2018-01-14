@@ -25,6 +25,7 @@ class ListingManager
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->moduleConfig = include __DIR__ . '/../../config/module.config.php';
         foreach ($this->entityManager->getRepository(PropertyParams::class)->findAll() as $param) {
             $this->listingParams[$param->getParamKey()] = $param;
         }
@@ -35,9 +36,31 @@ class ListingManager
         return $this->entityManager->getRepository(Listing::class)->getListing($id);
     }
 
-    public function getSearchResult($d_type,$p_type,$city,$params)
+    public function getSearchResult($d_type, $p_type, $city, $params)
     {
-        return $this->entityManager->getRepository(Listing::class)->getSearchResult($d_type,$p_type,$city,$params);
+        return $this->entityManager->getRepository(Listing::class)->getSearchResult($d_type, $p_type, $city, $params);
+    }
+
+    public function getListingsForAdmin($params)
+    {
+        if (isset($params['pricefrom'])) {
+            $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
+            $params['pricefrom'] = $this->convertPrice($params['pricefrom'], $currency);
+        }
+
+        if (isset($params['priceto'])) {
+            $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
+            $params['priceto'] = $this->convertPrice($params['priceto'], $currency);
+        }
+
+        return $this->entityManager->getRepository(Listing::class)
+            ->getListingsForAdmin($params);
+    }
+
+    public function getOneListingForAdmin($id)
+    {
+        return $this->entityManager->getRepository(Listing::class)
+            ->findById($id);
     }
 
     public function save($sessionContainer)
@@ -114,14 +137,11 @@ class ListingManager
             }
             for ($i = 0; $i < count($images); $i++) {
                 $s_path = __DIR__ . '/../../../../public' . $images[$i]->getSourceLink();
-                if($sessionContainer->userChoises['step3']['listing_images'][$i]['is_copy'])
-                {
-                    if (file_exists($sessionContainer->userChoises['step3']['listing_images'][$i]['tmp_name'])){
+                if ($sessionContainer->userChoises['step3']['listing_images'][$i]['is_copy']) {
+                    if (file_exists($sessionContainer->userChoises['step3']['listing_images'][$i]['tmp_name'])) {
                         copy($sessionContainer->userChoises['step3']['listing_images'][$i]['tmp_name'], $s_path);
                     }
-                }
-                else
-                {
+                } else {
                     move_uploaded_file($sessionContainer->userChoises['step3']['listing_images'][$i]['tmp_name'], $s_path);
                 }
 
@@ -172,8 +192,7 @@ class ListingManager
 
             foreach ($sessionContainer->editData['step2'] as $key => $value) {
                 if (!in_array($key, ['price', 'currency', 'description'])) {
-                    if ($key == 'plan')
-                    {
+                    if ($key == 'plan') {
                         $key = 'plan_build';
                     }
 
@@ -213,10 +232,8 @@ class ListingManager
 
         if (count($sessionContainer->editData['step3']['old_listing_images']) == count($listing->getImages())) {//if not delete and not add images
             for ($i = 0; $i < count($listing->getImages()); $i++) {
-                foreach ($sessionContainer->editData['step3']['old_listing_images'] as $k=>$v)
-                {
-                    if($sessionContainer->editData['step3']['old_listing_images'][$k] == $listing->getImages()[$i]->getSourceLink())
-                    {
+                foreach ($sessionContainer->editData['step3']['old_listing_images'] as $k => $v) {
+                    if ($sessionContainer->editData['step3']['old_listing_images'][$k] == $listing->getImages()[$i]->getSourceLink()) {
                         $listing->getImages()[$i]->setOrder($sessionContainer->editData['step3']['order'][$k]);
 
                         if ($listing->getImages()[$i]->getCrop() !== $sessionContainer->editData['step3']['old_crop'][$k]) {
@@ -312,20 +329,16 @@ class ListingManager
     {
         $listing = $this->entityManager->getRepository(Listing::class)->findOneById($id);
         $paramsValue = $this->entityManager->getRepository(PropertyParamsValue::class)->findByListingId($id);
-        if(count($listing->getImages()) > 0)
-        {
-            foreach ($listing->getImages() as $image)
-            {
-                $this->deleteImage($image->getUniqId(),$image->getName().".".$image->getExt());
+        if (count($listing->getImages()) > 0) {
+            foreach ($listing->getImages() as $image) {
+                $this->deleteImage($image->getUniqId(), $image->getName() . "." . $image->getExt());
                 $this->entityManager->remove($image);
             }
         }
-        foreach ($listing->getPhones() as $phone)
-        {
+        foreach ($listing->getPhones() as $phone) {
             $this->entityManager->remove($phone);
         }
-        foreach ($paramsValue as $paramValue)
-        {
+        foreach ($paramsValue as $paramValue) {
             $this->entityManager->remove($paramValue);
         }
         $this->entityManager->remove($listing);
@@ -422,8 +435,7 @@ class ListingManager
     {
         $microdistricts = [];
         $repo = $this->entityManager->getRepository(Microdistrict::class)->findByDistrictId($district_id);
-        foreach ($repo as $microdistrict)
-        {
+        foreach ($repo as $microdistrict) {
             $microdistricts[$microdistrict->getId()] = $microdistrict->getName();
         }
         return $microdistricts;
@@ -443,22 +455,15 @@ class ListingManager
         return $street_sh;
     }
 
-    public function formatLevels($level,$levels)
+    public function formatLevels($level, $levels)
     {
-        if($level !== '' && $levels !== "")
-        {
-            $result = $level.' этаж из '.$levels;
-        }
-        else if($level !== '' && $levels == '')
-        {
+        if ($level !== '' && $levels !== "") {
+            $result = $level . ' этаж из ' . $levels;
+        } else if ($level !== '' && $levels == '') {
             $result = $level . ' этаж';
-        }
-        else if($level == '' && $levels !== '')
-        {
-            $result = $levels.' этажей';
-        }
-        else if($level == '' && $levels == '')
-        {
+        } else if ($level == '' && $levels !== '') {
+            $result = $levels . ' этажей';
+        } else if ($level == '' && $levels == '') {
             $result = 'Неизвстно';
         }
         return $result;
@@ -467,13 +472,13 @@ class ListingManager
     public function formatRooms($q_rooms)
     {
         $str = '';
-        if($q_rooms == 1)
+        if ($q_rooms == 1)
             $str = ' комната';
-        if($q_rooms > 1 && $q_rooms < 5)
+        if ($q_rooms > 1 && $q_rooms < 5)
             $str = ' комнаты';
-        if($q_rooms >= 5)
+        if ($q_rooms >= 5)
             $str = ' комнат';
-        return $q_rooms.$str;
+        return $q_rooms . $str;
     }
 
     private function setParamsValue($listingData, $listing)
@@ -540,7 +545,7 @@ class ListingManager
         $layer->save($th_path, $filename, $createFolders, $backgroundColor, $imageQuality);
     }
 
-    private function deleteImage($uniqid,$nameExt)
+    private function deleteImage($uniqid, $nameExt)
     {
         $dir = __DIR__ . '/../../../../public' . '/assets/uploads/listing-images/' . $uniqid;// . '/source/';
         unlink($dir . '/source/' . $nameExt);
@@ -554,6 +559,49 @@ class ListingManager
         if (count(glob("$dir/*")) === 0) {
             rmdir($dir);
         }
+    }
+
+    private function convertPrice($price, $currency, $butify = false)
+    {
+        $result = [];
+        $rate = $this->moduleConfig['exchange_rate'];
+        switch ($currency) {
+            case 'uah':
+                $result['uah'] = round($price);
+                $result['usd'] = round($price / $rate['usd']);
+                $result['eur'] = round($price / $rate['eur']);
+                break;
+            case 'usd':
+                $result['uah'] = round($price * $rate['usd']);
+                $result['usd'] = round($price);
+                $result['eur'] = round($result['uah'] / $rate['eur']);
+                break;
+            case 'eur':
+                $result['uah'] = round($price * $rate['eur']);
+                $result['usd'] = round($result['uah'] / $rate['usd']);
+                $result['eur'] = round($price);
+                break;
+            default:
+                $result['uah'] = round($price * $rate['usd']);
+                $result['usd'] = round($price);
+                $result['eur'] = round($result['uah'] / $rate['eur']);
+                break;
+        }
+        if ($butify) {
+            foreach ($result as $k => $v) {
+                $arr = str_split($v);
+                $res = '';
+                $j = 0;
+                for ($i = count($arr); $i > -1; $i--) {
+                    $res = $arr[$i] . $res;
+                    if ($j % 3 == 0)
+                        $res = ' ' . $res;
+                    $j++;
+                }
+                $result[$k] = $res;
+            }
+        }
+        return $result;
     }
 
 }

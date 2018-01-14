@@ -99,27 +99,7 @@ class ListingRepository extends EntityRepository
                 ->setParameter('microdistricts', $params['microdistrict']);
         }
 
-
-//        echo '<pre>';
-//        var_dump($params);
-//        var_dump($queryBuilder->getQuery()->getSQL());
-//        var_dump($queryBuilder->getQuery()->getParameters());
-//        echo '</pre>';
-
-        $listings = $queryBuilder->getQuery()/*->getResult()*/;
-
-//        foreach ($listings as $listing) {
-//            $listing->setStreet($this->formatStreet($listing->getStreet()));
-//            $level = $listing->getParamsValue()[2]->getValue();
-//            $levels = $listing->getParamsValue()[3]->getValue();
-//            $q_rooms = $listing->getParamsValue()[0]->getValue();
-//
-//            $levelsString = $this->formatLevels($level,$levels);
-//            $roomsString = $this->formatRooms($q_rooms);
-//
-//            $listing->getParamsValue()['levelsString'] = $levelsString;
-//            $listing->getParamsValue()['roomsString'] = $roomsString;
-//        }
+        $listings = $queryBuilder->getQuery();
 
         return $listings;
     }
@@ -133,17 +113,77 @@ class ListingRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function getListingsForAdmin()
+    public function getListingsForAdmin($params = false)
     {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
 
-        $qb->select('l')
-            ->from(Listing::class, 'l')
-            ->orderBy('l.id', 'DESC');
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->getQuery();
+        if($params && is_array($params))
+        {
+
+            $queryBuilder->select('l,q_rooms,common_square','level','levels')
+                ->from(Listing::class, 'l')
+                ->join('l.dealType', 'd')
+                ->join('l.propertyType', 'p')
+                ->join('l.microdistrict', 'm')
+                ->join('m.district', 'di')
+                ->join('di.city', 'c')
+                ->join('l.paramsValue', 'q_rooms', 'WITH', 'q_rooms.paramId = 2')
+                ->join('l.paramsValue', 'common_square', 'WITH', 'common_square.paramId = 5')
+                ->join('l.paramsValue', 'level', 'WITH', 'level.paramId = 3')
+                ->join('l.paramsValue', 'levels', 'WITH', 'levels.paramId = 4')
+                ->orderBy('l.dateAdd', 'DESC');
+
+            if (isset($params['dtype'])) {
+                $queryBuilder->andWhere('d.nameLat = :dtype')
+                    ->setParameter('dtype', $params['dtype']);
+            }
+
+            if (isset($params['ptype'])) {
+                $queryBuilder->andWhere('p.nameLat = :ptype')
+                    ->setParameter('ptype', $params['ptype']);
+            }
+
+            if (isset($params['rooms'])) {
+                $queryBuilder->andWhere($queryBuilder->expr()->in('q_rooms.value', ':qr'))
+                    ->setParameter('qr', $params['rooms']);
+            }
+
+            if (isset($params['pricefrom'])) {
+                $queryBuilder->andWhere('l.price >= :priceFromUah AND l.currencyId = 2 OR l.price >= :priceFromUsd AND l.currencyId = 1 OR l.price >= :priceFromEur AND l.currencyId = 3')
+                    ->setParameter('priceFromUah', $params['pricefrom']['uah'])
+                    ->setParameter('priceFromUsd', $params['pricefrom']['usd'])
+                    ->setParameter('priceFromEur', $params['pricefrom']['eur']);
+            }
+
+            if (isset($params['priceto'])) {
+                $queryBuilder->andWhere('l.price <= :priceToUah AND l.currencyId = 2 OR l.price <= :priceToUsd AND l.currencyId = 1 OR l.price <= :priceToEur AND l.currencyId = 3')
+                    ->setParameter('priceToUah', $params['priceto']['uah'])
+                    ->setParameter('priceToUsd', $params['priceto']['usd'])
+                    ->setParameter('priceToEur', $params['priceto']['eur']);
+            }
+
+            if (isset($params['district'])) {
+                $queryBuilder->andWhere('di.id = :district')
+                    ->setParameter('district', $params['district']);
+            }
+
+            if (isset($params['microdistrict'])) {
+                $queryBuilder->andWhere($queryBuilder->expr()->in('m.id', ':microdistricts'))
+                    ->setParameter('microdistricts', $params['microdistrict']);
+            }
+        }
+        else
+        {
+            $queryBuilder->select('l')
+                ->from(Listing::class, 'l')
+                ->orderBy('l.id', 'DESC');
+        }
+
+        return $queryBuilder->getQuery();
     }
+
+
 
     private function formatStreet($street)
     {

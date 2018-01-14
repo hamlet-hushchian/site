@@ -31,14 +31,13 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Фильтр</h3>
                 <div class="panel-options">
-                    <a href="#" data-toggle="panel">
-                        <span class="collapse-icon">&ndash;</span>
-                        <span class="expand-icon">+</span>
-                    </a>
+<!--                    <a href="#" data-toggle="panel">-->
+<!--                        <span class="collapse-icon">&ndash;</span>-->
+<!--                        <span class="expand-icon">+</span>-->
+<!--                    </a>-->
                 </div>
             </div>
             <div class="panel-body">
-
                 <form role="form">
                     <div class="row">
                         <div class="form-group col-xs-12 col-md-3">
@@ -50,10 +49,10 @@
                                 });
                             </script>
 
-                            <select class="form-control" id="sboxit-1">
-                                <option>Выбрать тип</option>
-                                <option value="prodazha">Продажа</option>
-                                <option value="arenda">Аренда</option>
+                            <select class="form-control" id="sboxit-1" name="dtype">
+                                <option value="">Выбрать тип</option>
+                                <option <?= $this->params['dtype'] == 'prodazha' ? 'selected' : ''?>  value="prodazha">Продажа</option>
+                                <option <?= $this->params['dtype'] == 'arenda' ? 'selected' : ''?> value="arenda">Аренда</option>
                             </select>
 
                         </div>
@@ -67,11 +66,11 @@
                                 });
                             </script>
 
-                            <select class="form-control" id="sboxit-2">
-                                <option>Выбрать тип</option>
-                                <option value="kvartira">Квартира</option>
-                                <option value="komnat">Комната</option>
-                                <option value="domov">Дом</option>
+                            <select class="form-control" id="sboxit-2" name="ptype">
+                                <option value="">Выбрать тип</option>
+                                <option <?= $this->params['ptype'] == 'kvartira' ? 'selected' : ''?> value="kvartira">Квартира</option>
+                                <option <?= $this->params['ptype'] == 'komnat' ? 'selected' : ''?> value="komnat">Комната</option>
+                                <option <?= $this->params['ptype'] == 'domov' ? 'selected' : ''?> value="domov">Дом</option>
                             </select>
 
                         </div>
@@ -86,9 +85,9 @@
                             </script>
 
                             <select class="form-control" id="sboxit-3" name="district">
-                                <option>Выбрать район</option>
+                                <option value="">Выбрать район</option>
                                 <? foreach ($this->districts as $district): ?>
-                                    <option value="<?= $district->getNameLat() ?>"><?= $district->getName() ?></option>
+                                    <option <?= $this->params['district'] == $district->getId() ? 'selected' : ''?> value="<?= $district->getId() ?>"><?= $district->getName() ?></option>
                                 <? endforeach; ?>
                             </select>
 
@@ -102,12 +101,12 @@
                                     $("#sboxit-4").selectBoxIt();
                                 });
                             </script>
-
-                            <select class="form-control" id="sboxit-4">
-                                <option>Выбрать микрорайон</option>
-                                <? foreach ($this->microdistricts as $microdistrict): ?>
-                                    <option value="<?= $microdistrict->getNameLat() ?>"><?= $microdistrict->getName() ?></option>
-                                <? endforeach; ?>
+                            <select class="form-control" id="sboxit-4" name="microdistrict">
+                                <option class="def" value="">Выбрать микрорайон</option>
+                                <? if(is_array($this->microdistricts)){
+                                 foreach ($this->microdistricts as $id => $name): ?>
+                                    <option <?= $this->params['microdistrict'] == $id ? 'selected' : ''?> value="<?= $id ?>"><?= $name ?></option>
+                                <? endforeach; }?>
                             </select>
 
                         </div>
@@ -119,24 +118,34 @@
                                  class="x-select-item-wrap checker col-xs-12">
                                 <div value="null" class="x-select">Комнат</div>
                                 <div class="x-select-tt">
-                                    <div data-value="1" class="x-select-tt-item ">1 комнатная</div>
-                                    <div data-value="2" class="x-select-tt-item ">2 комнатная</div>
-                                    <div data-value="3" class="x-select-tt-item ">3 комнатная</div>
-                                    <div data-value="4" class="x-select-tt-item ">4 комнатная</div>
-                                    <div data-value="5" class="x-select-tt-item ">5 комнатная</div>
-                                    <div data-value="6" class="x-select-tt-item ">6+ комнатная</div>
+
+                                    <?
+                                        for ($i = 1; $i <= 6; $i++) {
+                                            $j = $i == 6 ? '6+' : $i;
+                                            if ($this->params['rooms']) {
+                                                $checked = in_array($i, $this->params['rooms']) ? 'checked' : '';
+                                                $result .= '<div data-value="' . $i . '" class="x-select-tt-item ' . $checked . '">' . $j . ' комнатная</div>';
+                                            } else {
+                                                $result .= '<div data-value="' . $i . '" class="x-select-tt-item">' . $j . ' комнатная</div>';
+                                            }
+
+                                        }
+                                        echo $result;
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-3">
                             <div class="row">
                                 <div class="form-group col-xs-6">
-                                        <label class="control-label">Цена От</label>
-                                        <input type="text" class="form-control" name="pricefrom" placeholder="От">
+                                    <label class="control-label">Цена От</label>
+                                    <input type="text" class="form-control" name="pricefrom" placeholder="От"
+                                        <?= $this->params['pricefrom'] ? 'value="'. $this->params['pricefrom'] .'"' : ''?>>
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label class="control-label">Цена До</label>
-                                    <input type="text" class="form-control" id="priceto" placeholder="До">
+                                    <input type="text" class="form-control" id="priceto" name="priceto" placeholder="До"
+                                        <?= $this->params['priceto'] ? 'value="'. $this->params['priceto'] .'"' : ''?>>
                                 </div>
                             </div>
                         </div>
@@ -150,10 +159,10 @@
                                 });
                             </script>
 
-                            <select class="form-control" id="sboxit-currency">
-                                <option>USD</option>
-                                <option>UAH</option>
-                                <option>EUR</option>
+                            <select class="form-control" id="sboxit-currency" name="currency">
+                                <option <?= $this->params['currency'] == 'USD' ? 'selected' : ''?>>USD</option>
+                                <option <?= $this->params['currency'] == 'UAH' ? 'selected' : ''?>>UAH</option>
+                                <option <?= $this->params['currency'] == 'EUR' ? 'selected' : ''?>>EUR</option>
                             </select>
                         </div>
 
@@ -161,10 +170,11 @@
                             <div class="row">
                                 <div class="col-xs-9" style="padding-right: 0;">
                                     <label class="control-label">Поиск по ID</label>
-                                    <input type="text" class="form-control" name="pricefrom" placeholder="Введите ID">
+                                    <input type="text" class="form-control" name="byid" placeholder="Введите ID"
+                                        <?= $this->params['id'] ? 'value="'. $this->params['id'] .'"' : ''?>>
                                 </div>
                                 <div class="col-xs-3" style="padding-left: 0; margin-top: 23px;">
-                                    <button class="btn btn-icon btn-success" style="height: 32px;">
+                                    <button class="btn btn-icon btn-success byid" style="height: 32px;">
                                         <i class="fa-search" style="padding: 0;"></i>
                                     </button>
                                 </div>
@@ -174,16 +184,17 @@
                         <div class="form-group col-xs-12 col-md-3" style="margin-top: 30px;">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <button class="btn btn-secondary btn-icon btn-icon-standalone">
+                                    <a href="#" data-action="search"
+                                       class="btn btn-secondary btn-icon btn-icon-standalone">
                                         <i class="fa-filter"></i>
                                         <span>Показать</span>
-                                    </button>
+                                    </a>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button class="btn btn-red btn-icon btn-icon-standalone">
+                                    <a href="/admin/listings" class="btn btn-red btn-icon btn-icon-standalone">
                                         <i class="fa-remove"></i>
                                         <span>Сбросить фильтр</span>
-                                    </button>
+                                    </a>
                                 </div>
 
 
@@ -278,10 +289,15 @@
     ?>
 </div>
 
-<?= $this->paginationControl($this->listings,
-    'Sliding',
-    'admin/partial/paginator',
-    ['route' => 'listings']); ?>
+<?
+if(!$this->params['id'])
+{
+    echo $this->paginationControl($this->listings,
+        'Sliding',
+        'admin/partial/paginator',
+        ['route' => 'listings', 'query' => $this->params]);
+}
+ ?>
 
 <script>
     $(document).on('click', '.dropdown-menu li a', function (e) {
@@ -328,22 +344,100 @@
 
     $(document).ready(function () {
         $($('.panel-body form')[0]).xSelect();
-//        slink();
-        $('select').change(function () {
+        $('.byid').click(function (e) {
+            e.preventDefault();
+            var id = $('input[name="byid"]').val();
+            if(id !== '')
+                window.location.href = '/admin/listings?id='+id;
+        });
+        $('select[name="district"]').change(function () {
+            var district = $(this).val();
+            $.ajax({
+                type : 'post',
+                url : '',
+                data : {getMicrodistrict : 1,district:district},
+                dataType : 'json',
+                success : function (res) {
+                    $('select[name="microdistrict"] option').not('.def').remove();
+                    $.each(res, function (id,name) {
+                        $('select[name="microdistrict"]').data("selectBox-selectBoxIt").add({ value: id, text: name });
+                    });
+                },
+                error : function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        slink();
+        $('select,input').change(function () {
             slink();
-        })
+        });
+        $('.x-select-tt-item').click(function () {
+            slink();
+        });
     });//End of document ready
-    
+
     function slink() {
-        $.each($('select'),function () {
-            console.log($(this).val());
-        })
+        var sb = $('a.btn[data-action="search"]'); //search button
+        var qs = '' //query string
+        var filter = {};
+        filter['rooms'] = [];
+
+        $.each(checker_container.rooms, function () {
+            filter.rooms.push(parseInt(this));
+        });
+        $.each($('select'), function () {
+            var name = $(this).attr('name');
+            var value = $(this).val();
+            if (value) {
+                filter[name] = value;
+            }
+
+        });
+        $.each($('input'), function () {
+            if ($(this).attr('name') == 'byid' || $(this).attr('type') == 'checkbox')
+                return;
+            var name = $(this).attr('name');
+            var value = $(this).val();
+            if (value) {
+                filter[name] = value;
+            }
+        });
+
+        if (!filter.pricefrom && !filter.priceto)
+            delete filter.currency;
+        if (filter.rooms.length == 0)
+            delete filter.rooms;
+        if(Object.keys(filter).length > 0)
+            qs += '?search=1';
+        $.each(filter, function (name, value) {
+            if (name == 'rooms')
+                return;
+
+            qs += (qs == '' ? name + '=' + value : '&' + name + '=' + value);
+        });
+
+        $.each(filter, function (name, value) {
+            if (name !== 'rooms')
+                return;
+
+            $.each(value, function () {
+                qs += (qs == '' ? 'rooms=' + this : '&rooms=' + this);
+            });
+        });
+        <?
+//            if($this->page > 1)
+//            {
+//                echo "qs += (qs == '' ? 'page=' + ". $this->page ." : '&page=' + ". $this->page .");";
+//            }
+        ?>
+        sb.attr('href', '/admin/listings'+qs);
     }
 </script>
 
 <link rel="stylesheet" href="/lib/x-select/css/x-select.css">
 <style>
-    .x-select-item-wrap{
+    .x-select-item-wrap {
         border: 1px solid #e4e4e4;
         font-size: 1.3rem;
         line-height: 13px;
@@ -351,7 +445,8 @@
         font: 13px Helvetica, Arial;
         color: #7d7f7f;
     }
-    .x-select-item-wrap.checker .x-select-tt-item:before{
+
+    .x-select-item-wrap.checker .x-select-tt-item:before {
         background: url(/assets/images/cbx-sprite-green.png) no-repeat;
         width: 16px;
         height: 16px;
