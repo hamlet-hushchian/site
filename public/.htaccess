@@ -8,6 +8,8 @@ RewriteCond %{REQUEST_URI} ![^\/]$
 RewriteRule ^(.*)\/$ /$1 [R=301,L]
 #End redirect from slash to no-slash
 
+php_value memory_limit 512M
+
 #Start redirect to lower case
 # If there are caps, set HASCAPS to true and skip next rule
 RewriteRule [A-Z] - [E=HASCAPS:TRUE,S=1]

@@ -91,6 +91,8 @@ Class ListingController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
+
+
         $districts = $this->entityManager->getRepository(District::class)->findAll();
 
         $microdistricts = $params['district'] ? $this->listingManager
@@ -257,8 +259,8 @@ Class ListingController extends AbstractActionController
 
                 return $this->redirect()->toRoute("listings", ['action' => 'edit', 'id' => $listingId]);
             } else {
-//                var_dump($form->getMessages());
-//                die();
+                var_dump($form->getMessages());
+                die();
             }
         }
 

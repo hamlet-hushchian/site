@@ -31,10 +31,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Фильтр</h3>
                 <div class="panel-options">
-<!--                    <a href="#" data-toggle="panel">-->
-<!--                        <span class="collapse-icon">&ndash;</span>-->
-<!--                        <span class="expand-icon">+</span>-->
-<!--                    </a>-->
                 </div>
             </div>
             <div class="panel-body">
@@ -213,13 +209,12 @@
     </div>
 </div>
 
-
 <div class="listings_wrap row">
     <?
-    foreach ($this->listings as $listing) {
+    foreach ($this->listings as $listing) :
         $params = [];
-        foreach ($listing->getParamsValue() as $k => $paramValue) {
 
+        foreach ($listing->getParamsValue() as $k => $paramValue) {
             if (is_int($k)) {
                 $params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
             }
@@ -238,6 +233,7 @@
                         <a href="/listing/<?= $listing->getId() ?>" target="_blank"> <?= $listing->getStreet() ?>
                             , <?= $listing->getHouseNumber() ?></a>
                     </h4>
+
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <p>Операция: <?= $listing->getDealType()->getName() ?></p>
@@ -284,9 +280,7 @@
             </div>
 
         </div>
-        <?
-    }
-    ?>
+        <?endforeach;?>
 </div>
 
 <?

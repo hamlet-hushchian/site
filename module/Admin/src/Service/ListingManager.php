@@ -107,6 +107,10 @@ class ListingManager
             foreach ($sessionContainer->userChoises['step3']['listing_images'] as $k => $image) {
                 $name = sha1(uniqid());
                 $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+                $ext = $ext == 'JPG' ? 'jpg' : $ext;
+                $ext = $ext == 'PNG' ? 'png' : $ext;
+
                 $new_name = $name . '.' . $ext;
                 $s_link = '/assets/uploads/listing-images/' . $uniq_id . '/source/' . $new_name;
                 $th_link = '/assets/uploads/listing-images/' . $uniq_id . '/thumb/' . $new_name;
@@ -175,6 +179,7 @@ class ListingManager
             $paramsValue[$paramValue->getParam()->getParamKey()] = $paramValue;
         }
 
+
         $curDate = date('Y-m-d H:i:s');
         $currency = $this->entityManager->getRepository(Currency::class)->findOneById($sessionContainer->editData['step2']['currency']);
         $propertyType = $this->entityManager->getRepository(PropertyType::class)->findOneById($sessionContainer->editData['step1']['property_type']);
@@ -207,6 +212,8 @@ class ListingManager
             $this->setParamsValue($sessionContainer->editData, $listing);
         }
 
+
+
         if (count($sessionContainer->editData['step1']['phone']) == count($listing->getPhones())) {
             for ($i = 0; $i < count($listing->getPhones()); $i++) {
                 $listing->getPhones()[$i]->setNumber($sessionContainer->editData['step1']['phone'][$i]);
@@ -230,7 +237,7 @@ class ListingManager
         $needSave = [];
 
 
-        if (count($sessionContainer->editData['step3']['old_listing_images']) == count($listing->getImages())) {//if not delete and not add images
+        if (count($sessionContainer->editData['step3']['old_listing_images']) == count($listing->getImages())) { //if not delete and not add images
             for ($i = 0; $i < count($listing->getImages()); $i++) {
                 foreach ($sessionContainer->editData['step3']['old_listing_images'] as $k => $v) {
                     if ($sessionContainer->editData['step3']['old_listing_images'][$k] == $listing->getImages()[$i]->getSourceLink()) {
@@ -253,11 +260,15 @@ class ListingManager
             }
         }
 
+
+
         if (count($sessionContainer->editData['step3']['listing_images']) > 0) {
             $uniq_id = $listing->getImages()[0] ? $listing->getImages()[0]->getUniqId() : uniqid();
             foreach ($sessionContainer->editData['step3']['listing_images'] as $k => $image) {
                 $name = sha1(uniqid());
                 $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+                $ext = $ext == 'JPG' ? 'jpg' : $ext;
+                $ext = $ext == 'PNG' ? 'png' : $ext;
                 $new_name = $name . '.' . $ext;
                 $s_link = '/assets/uploads/listing-images/' . $uniq_id . '/source/' . $new_name;
                 $th_link = '/assets/uploads/listing-images/' . $uniq_id . '/thumb/' . $new_name;

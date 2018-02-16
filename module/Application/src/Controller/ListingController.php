@@ -56,7 +56,7 @@ class ListingController extends AbstractActionController
 
                     $message = "<p><b>Имя: </b>".$selection->getName().";</p>".
                     "<p><b>Телефон: </b>".$selection->getPhone().";</p>".
-                    "<p><b>ID Объявления: </b>".$selection->getPhone().";</p>".
+                    "<p><b>ID Объявления: </b>".$selection->getListingId().";</p>".
                     "<p><b>Сообщение: </b>".$selection->getMessage().";</p>";
                     $headers = "From: Redl \r\n";
                     $headers .= "Reply-To: no-reply@redl.com.ua\r\n";

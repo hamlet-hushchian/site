@@ -1194,8 +1194,8 @@ Class AddListingForm extends Form
                         'options' => [
                             'minWidth' => 128,
                             'minHeight' => 128,
-                            'maxWidth' => 4096,
-                            'maxHeight' => 4096,
+                            'maxWidth' => 7000,
+                            'maxHeight' => 7000,
                             'messages' => [
                                 \Zend\Validator\File\ImageSize::WIDTH_TOO_SMALL => "Минимальная ширина изображения должна быть '%minwidth%px', а вы загружаете шириной '%width%px'",
                                 \Zend\Validator\File\ImageSize::HEIGHT_TOO_SMALL => "Минимальная высота изображения должна быть '%minheight%px', а вы загружаете высота '%height%px'",

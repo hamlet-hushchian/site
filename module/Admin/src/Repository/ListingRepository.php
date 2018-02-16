@@ -3,6 +3,7 @@
 namespace Admin\Repository;
 
 use Admin\Entity\Listing;
+use Admin\Entity\PropertyParamsValue;
 use Doctrine\ORM\EntityRepository;
 
 // Это пользовательский класс репозитория для сущности Listing.
@@ -179,7 +180,6 @@ class ListingRepository extends EntityRepository
                 ->from(Listing::class, 'l')
                 ->orderBy('l.id', 'DESC');
         }
-
         return $queryBuilder->getQuery();
     }
 
