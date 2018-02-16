@@ -122,7 +122,7 @@ class ListingRepository extends EntityRepository
         if($params && is_array($params))
         {
 
-            $queryBuilder->select('l,q_rooms,common_square','level','levels')
+            $queryBuilder->select('l')
                 ->from(Listing::class, 'l')
                 ->join('l.dealType', 'd')
                 ->join('l.propertyType', 'p')
