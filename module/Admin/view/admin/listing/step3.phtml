@@ -1,9 +1,13 @@
 
   <?
-  foreach ($this->form->get('crop')->getValue() as $k=>$v)
+  if($this->form->get('crop')->getValue())
   {
-      $crops[$k] = json_decode($v,true);
+      foreach ($this->form->get('crop')->getValue() as $k=>$v)
+      {
+          $crops[$k] = json_decode($v,true);
+      }
   }
+
 
 
   ?>

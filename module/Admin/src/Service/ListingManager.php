@@ -482,6 +482,8 @@ class ListingManager
 
     public function formatRooms($q_rooms)
     {
+        if(!$q_rooms)
+            return 'Неизвестно';
         $str = '';
         if ($q_rooms == 1)
             $str = ' комната';

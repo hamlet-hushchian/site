@@ -52,24 +52,40 @@ class ListingRepository extends EntityRepository
     public function getSearchResult($d_type, $p_type, $city, $params)
     {
         $p_type = $p_type == 'kvartir' ? 'kvartira' : $p_type;
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        $queryBuilder->select('l,q_rooms,common_square','level','levels')
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder->select('l')
             ->from(Listing::class, 'l')
-            ->join('l.dealType', 'd')
-            ->join('l.propertyType', 'p')
-            ->join('l.microdistrict', 'm')
-            ->join('m.district', 'di')
-            ->join('di.city', 'c')
-            ->join('l.paramsValue', 'q_rooms', 'WITH', 'q_rooms.paramId = 2')
-            ->join('l.paramsValue', 'common_square', 'WITH', 'common_square.paramId = 5')
-            ->join('l.paramsValue', 'level', 'WITH', 'level.paramId = 3')
-            ->join('l.paramsValue', 'levels', 'WITH', 'levels.paramId = 4')
+            ->leftJoin('l.dealType', 'd')
+            ->leftJoin('l.propertyType', 'p')
+            ->leftJoin('l.microdistrict', 'm')
+            ->leftJoin('m.district', 'di')
+            ->leftJoin('di.city', 'c')
             ->where($queryBuilder->expr()->andX('d.nameLat = :deal', 'p.nameLat = :property', 'c.nameLat = :city'))
-            ->orderBy('l.dateAdd', 'DESC')
-            ->setParameter('deal', $d_type)
+            ->setParameter('deal',$d_type)
             ->setParameter('property', $p_type)
             ->setParameter('city', $city);
+//        $l = $queryBuilder->getQuery();
+//        return $l;
+
+//        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+//
+//        $queryBuilder->select('l,q_rooms,common_square','level','levels')
+//            ->from(Listing::class, 'l')
+//            ->join('l.dealType', 'd')
+//            ->join('l.propertyType', 'p')
+//            ->join('l.microdistrict', 'm')
+//            ->join('m.district', 'di')
+//            ->join('di.city', 'c')
+//            ->join('l.paramsValue', 'q_rooms', 'WITH', 'q_rooms.paramId = 2')
+//            ->join('l.paramsValue', 'common_square', 'WITH', 'common_square.paramId = 5')
+//            ->join('l.paramsValue', 'level', 'WITH', 'level.paramId = 3')
+//            ->join('l.paramsValue', 'levels', 'WITH', 'levels.paramId = 4')
+//            ->where($queryBuilder->expr()->andX('d.nameLat = :deal', 'p.nameLat = :property', 'c.nameLat = :city'))
+//            ->orderBy('l.dateAdd', 'DESC')
+//            ->setParameter('deal', $d_type)
+//            ->setParameter('property', $p_type)
+//            ->setParameter('city', $city);
 
         if (isset($params['rooms'])) {
             $queryBuilder->andWhere($queryBuilder->expr()->in('q_rooms.value', ':qr'))

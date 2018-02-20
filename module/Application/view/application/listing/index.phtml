@@ -233,7 +233,7 @@
         // build items array
         var items = [
             <? for($i = 0; $i < count($this->listing->getImages()); $i++){
-            $image = getimagesize('/home/newredl/redl.com.ua/www/public/assets/uploads/listing-images/' . $this->listing->getImages()[$i]->getUniqId() . '/source/' . $this->listing->getImages()[$i]->getName() . '.' . $this->listing->getImages()[$i]->getExt());
+            $image = getimagesize(__DIR__ . '/../../../../../public/assets/uploads/listing-images/' . $this->listing->getImages()[$i]->getUniqId() . '/source/' . $this->listing->getImages()[$i]->getName() . '.' . $this->listing->getImages()[$i]->getExt());
             ?>
             {
                 src: '<?=$this->listing->getImages()[$i]->getSourceLink()?>',

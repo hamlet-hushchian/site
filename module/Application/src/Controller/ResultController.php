@@ -64,15 +64,16 @@ class ResultController extends AbstractActionController
             $listing->setPrice($searchManager->convertPrice($listing->getPrice(), strtolower($listing->getCurrency()->getShort())));
             $listing->setStreet($this->listingManager->formatStreet($listing->getStreet()));
 
-            $level = $listing->getParamsValue()[2]->getValue();
-            $levels = $listing->getParamsValue()[3]->getValue();
-            $q_rooms = $listing->getParamsValue()[0]->getValue();
+            foreach ($listing->getParamsValue() as $paramValue)
+            {
+                $listing->params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
+            }
 
-            $levelsString = $this->listingManager->formatLevels($level, $levels);
-            $roomsString = $this->listingManager->formatRooms($q_rooms);
+            $levelsString = $this->listingManager->formatLevels($listing->params['level'], $listing->params['levels']);
+            $roomsString = $this->listingManager->formatRooms($listing->params['q_rooms']);
 
-            $listing->getParamsValue()['levelsString'] = $levelsString;
-            $listing->getParamsValue()['roomsString'] = $roomsString;
+            $listing->params['levelsString'] = $levelsString;
+            $listing->params['roomsString'] = $roomsString;
         }
 
 

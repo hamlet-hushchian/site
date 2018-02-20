@@ -46,7 +46,9 @@ Class AddListingForm extends Form
      */
     protected function addElements($step)
     {
-        if ($step == 1) {
+        if ($step == 1)
+        {
+            //deal_type
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'deal_type',
@@ -61,6 +63,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //property_type
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'property_type',
@@ -75,6 +78,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //com_property_type
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'com_property_type',
@@ -94,6 +98,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //city
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'city',
@@ -108,6 +113,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //district
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'district',
@@ -122,6 +128,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //microdistrict
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'microdistrict',
@@ -142,6 +149,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //subway_station
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'subway_station',
@@ -156,6 +164,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //street
             $this->add([
                 'type' => 'text',
                 'name' => 'street',
@@ -169,6 +178,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //house_number
             $this->add([
                 'type' => 'text',
                 'name' => 'house_number',
@@ -181,6 +191,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //flat_number
             $this->add([
                 'type' => 'text',
                 'name' => 'flat_number',
@@ -193,6 +204,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //phone
             $this->add([
                 'type' => 'Zend\Form\Element\Collection',
                 'name' => 'phone',
@@ -211,6 +223,7 @@ Class AddListingForm extends Form
                 ],
             ]);
 
+            //submit
             $this->add([
                 'type' => 'submit',
                 'name' => 'submit',
@@ -220,10 +233,12 @@ Class AddListingForm extends Form
                     'class' => ''
                 ],
             ]);
-        } elseif ($step == 2) {
-
-            if ($this->stepData['step1']['property_type'] == 1)//Квартира
+        }
+        elseif ($step == 2)
+        {
+            if ($this->stepData['step1']['property_type'] == 1)//Flat
             {
+                //q_rooms
                 $this->add([
                     'type' => 'select',
                     'name' => 'q_rooms',
@@ -247,6 +262,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //plan
                 $this->add([
                     'type' => 'select',
                     'name' => 'plan',
@@ -264,6 +280,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //common_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'common_square',
@@ -276,6 +293,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //real_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'real_square',
@@ -288,6 +306,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //kitchen_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'kitchen_square',
@@ -300,6 +319,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //balkon_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'balkon_square',
@@ -312,6 +332,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //level
                 $this->add([
                     'type' => 'text',
                     'name' => 'level',
@@ -324,6 +345,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //levels
                 $this->add([
                     'type' => 'text',
                     'name' => 'levels',
@@ -336,6 +358,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //price
                 $this->add([
                     'type' => 'text',
                     'name' => 'price',
@@ -348,6 +371,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //currency
                 $this->add([
                     'type' => 'select',
                     'name' => 'currency',
@@ -364,6 +388,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //description
                 $this->add([
                     'type' => 'textarea',
                     'name' => 'description',
@@ -376,6 +401,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //san_node
                 $this->add([
                     'type' => 'select',
                     'name' => 'san_node',
@@ -391,6 +417,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //build_type
                 $this->add([
                     'type' => 'select',
                     'name' => 'build_type',
@@ -406,6 +433,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //type_wall
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_wall',
@@ -424,6 +452,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //type_window
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_window',
@@ -439,6 +468,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //type_warm
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_warm',
@@ -454,8 +484,9 @@ Class AddListingForm extends Form
                     ],
                 ]);
             }
-            if ($this->stepData['step1']['property_type'] == 2)//Комната
+            if ($this->stepData['step1']['property_type'] == 2)//Room
             {
+                //common_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'common_square',
@@ -467,6 +498,8 @@ Class AddListingForm extends Form
                         'label' => 'Площадь общая',
                     ],
                 ]);
+
+                //kitchen_square
                 $this->add([
                     'type' => 'text',
                     'name' => 'kitchen_square',
@@ -478,6 +511,8 @@ Class AddListingForm extends Form
                         'label' => 'Кухня',
                     ],
                 ]);
+
+                //level
                 $this->add([
                     'type' => 'text',
                     'name' => 'level',
@@ -490,6 +525,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //levels
                 $this->add([
                     'type' => 'text',
                     'name' => 'levels',
@@ -502,6 +538,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //price
                 $this->add([
                     'type' => 'text',
                     'name' => 'price',
@@ -514,6 +551,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //currency
                 $this->add([
                     'type' => 'select',
                     'name' => 'currency',
@@ -530,6 +568,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //description
                 $this->add([
                     'type' => 'textarea',
                     'name' => 'description',
@@ -542,6 +581,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //san_node
                 $this->add([
                     'type' => 'select',
                     'name' => 'san_node',
@@ -557,7 +597,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
-
+                //build_type
                 $this->add([
                     'type' => 'select',
                     'name' => 'build_type',
@@ -572,6 +612,8 @@ Class AddListingForm extends Form
                         ]
                     ],
                 ]);
+
+                //type_wall
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_wall',
@@ -590,6 +632,7 @@ Class AddListingForm extends Form
                     ],
                 ]);
 
+                //type_window
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_window',
@@ -604,6 +647,8 @@ Class AddListingForm extends Form
                         ]
                     ],
                 ]);
+
+                //type_wall
                 $this->add([
                     'type' => 'select',
                     'name' => 'type_warm',
@@ -619,15 +664,216 @@ Class AddListingForm extends Form
                     ],
                 ]);
             }
-            if ($this->stepData->userChoises['step1']['property_type'] == 3)//Дом
+            if ($this->stepData['step1']['property_type'] == 3)//House
             {
-                //
+                //q_rooms
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'q_rooms',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Количество комнат',
+                        'value_options' => [
+                            '1' => '1',
+                            '2' => '2',
+                            '3' => '3',
+                            '4' => '4',
+                            '5' => '5',
+                            '6' => '6',
+                            '7' => '7',
+                            '8' => '8',
+                            '9' => '9',
+                            '10' => '10',
+                        ]
+                    ],
+                ]);
+
+                //plan
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'plan',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Планировка',
+                        'value_options' => [
+                            'Раздельные комнаты' => 'Раздельные комнаты',
+                            'Проходные комнаты' => 'Проходные комнаты',
+                            'Студия' => 'Студия',
+                            'Свободная планировка' => 'Свободная планировка',
+                        ]
+                    ],
+                ]);
+
+                //levels
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'levels',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'От 1 до 50'
+                    ],
+                    'options' => [
+                        'label' => 'Этажность',
+                    ],
+                ]);
+
+                //san_node
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'san_node',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Сан узел',
+                        'value_options' => [
+                            'Совмещенный' => 'Совмещенный',
+                            'Раздельный' => 'Раздельный',
+                        ]
+                    ],
+                ]);
+
+                //price
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'price',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Цена'
+                    ],
+                    'options' => [
+                        'label' => 'Цена',
+                    ],
+                ]);
+
+                //currency
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'currency',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Валюта',
+                        'value_options' => [
+                            '1' => 'USD',
+                            '2' => 'UAH',
+                            '3' => 'EUR',
+                        ]
+                    ],
+                ]);
+
+                //description
+                $this->add([
+                    'type' => 'textarea',
+                    'name' => 'description',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Описание'
+                    ],
+                    'options' => [
+                        'label' => 'Описание',
+                    ],
+                ]);
+
+                //common_square
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'common_square',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Общая площадь'
+                    ],
+                    'options' => [
+                        'label' => 'Площадь общая',
+                    ],
+                ]);
+
+                //real_square
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'real_square',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Жилая площадь'
+                    ],
+                    'options' => [
+                        'label' => 'Жилая',
+                    ],
+                ]);
+
+                //kitchen_square
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'kitchen_square',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Площадь кухни'
+                    ],
+                    'options' => [
+                        'label' => 'Кухня',
+                    ],
+                ]);
+
+                //size_land
+                $this->add([
+                    'type' => 'text',
+                    'name' => 'size_land',
+                    'attributes' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Соток'
+                    ],
+                    'options' => [
+                        'label' => 'Размер участка',
+                    ],
+                ]);
+
+                //type_wall
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'type_wall',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Тип стен',
+                        'value_options' => [
+                            'Кирпичный' => 'Кирпичный',
+                            'Панельный' => 'Панельный',
+                            'Монолитный' => 'Монолитный',
+                            'Блочный' => 'Блочный',
+                            'Деревянный' => 'Деревянный',
+                        ]
+                    ],
+                ]);
+
+                //type_window
+                $this->add([
+                    'type' => 'select',
+                    'name' => 'type_window',
+                    'attributes' => [
+                        'class' => 'form-control',
+                    ],
+                    'options' => [
+                        'label' => 'Планировка',
+                        'value_options' => [
+                            'Пластиковые' => 'Пластиковые',
+                            'Деревянные' => 'Деревянные',
+                        ]
+                    ],
+                ]);
             }
             if ($this->stepData['step1']['property_type'] == 4)//Коммерческая недвижимость
             {
                 //
             }
-        } elseif ($step == 3) {
+        }
+        elseif ($step == 3)
+        {
             $this->add([
                 'type' => 'file',
                 'isArray' => true,
@@ -660,8 +906,7 @@ Class AddListingForm extends Form
     /**
      * Этот метод создает фильтр входных данных (используется для фильтрации/валидации).
      */
-    private
-    function addInputFilter($step)
+    private function addInputFilter($step)
     {
         $inputFilter = new InputFilter();
         $this->setInputFilter($inputFilter);

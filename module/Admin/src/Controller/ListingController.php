@@ -91,8 +91,6 @@ Class ListingController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-
-
         $districts = $this->entityManager->getRepository(District::class)->findAll();
 
         $microdistricts = $params['district'] ? $this->listingManager
@@ -139,7 +137,6 @@ Class ListingController extends AbstractActionController
             $form->setData($data);
             $form->prepare();
         }
-
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
