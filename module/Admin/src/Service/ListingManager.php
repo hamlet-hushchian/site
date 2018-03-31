@@ -25,7 +25,6 @@ class ListingManager
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->moduleConfig = include __DIR__ . '/../../config/module.config.php';
         foreach ($this->entityManager->getRepository(PropertyParams::class)->findAll() as $param) {
             $this->listingParams[$param->getParamKey()] = $param;
         }
@@ -34,28 +33,6 @@ class ListingManager
     public function getListingById($id)
     {
         return $this->entityManager->getRepository(Listing::class)->getListing($id);
-    }
-
-    public function getListingsForAdmin($params)
-    {
-        if (isset($params['pricefrom'])) {
-            $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
-            $params['pricefrom'] = $this->convertPrice($params['pricefrom'], $currency);
-        }
-
-        if (isset($params['priceto'])) {
-            $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
-            $params['priceto'] = $this->convertPrice($params['priceto'], $currency);
-        }
-
-        return $this->entityManager->getRepository(Listing::class)
-            ->getListingsForAdmin($params);
-    }
-
-    public function getOneListingForAdmin($id)
-    {
-        return $this->entityManager->getRepository(Listing::class)
-            ->findById($id);
     }
 
     public function save($sessionContainer)
@@ -587,48 +564,4 @@ class ListingManager
             rmdir($dir);
         }
     }
-
-    private function convertPrice($price, $currency, $butify = false)
-    {
-        $result = [];
-        $rate = $this->moduleConfig['exchange_rate'];
-        switch ($currency) {
-            case 'uah':
-                $result['uah'] = round($price);
-                $result['usd'] = round($price / $rate['usd']);
-                $result['eur'] = round($price / $rate['eur']);
-                break;
-            case 'usd':
-                $result['uah'] = round($price * $rate['usd']);
-                $result['usd'] = round($price);
-                $result['eur'] = round($result['uah'] / $rate['eur']);
-                break;
-            case 'eur':
-                $result['uah'] = round($price * $rate['eur']);
-                $result['usd'] = round($result['uah'] / $rate['usd']);
-                $result['eur'] = round($price);
-                break;
-            default:
-                $result['uah'] = round($price * $rate['usd']);
-                $result['usd'] = round($price);
-                $result['eur'] = round($result['uah'] / $rate['eur']);
-                break;
-        }
-        if ($butify) {
-            foreach ($result as $k => $v) {
-                $arr = str_split($v);
-                $res = '';
-                $j = 0;
-                for ($i = count($arr); $i > -1; $i--) {
-                    $res = $arr[$i] . $res;
-                    if ($j % 3 == 0)
-                        $res = ' ' . $res;
-                    $j++;
-                }
-                $result[$k] = $res;
-            }
-        }
-        return $result;
-    }
-
 }

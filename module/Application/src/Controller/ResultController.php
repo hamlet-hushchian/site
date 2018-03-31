@@ -48,11 +48,6 @@ class ResultController extends AbstractActionController
         $page = $this->params()->fromQuery('page', 1);
         $listings = $this->entityManager->getRepository(Listing::class)->getSearchResult($dType, $pType, $city, $data);
 
-//        foreach ($listings as $listing)
-//        {
-//            $listing->setPrice($searchManager->convertPrice($listing->getPrice(),strtolower($listing->getCurrency()->getShort())));
-//        }
-
         // Создаем ZF3 пагинатор.
         $adapter = new DoctrineAdapter(new ORMPaginator($listings, false));
         $paginator = new Paginator($adapter);
