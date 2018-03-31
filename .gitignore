@@ -6,3 +6,4 @@ data/cache/*
 !data/cache/.gitkeep
 phpunit.xml
 public/assets/uploads
+public/assets/feed

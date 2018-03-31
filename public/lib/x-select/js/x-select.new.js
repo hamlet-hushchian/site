@@ -192,7 +192,8 @@ function xCheck(checker) {
 }
 
 //Replace from to text
-function adv_replace_text(from, to, elem,def=false){
+function adv_replace_text(from, to, elem, def){
+    def = (typeof def === 'undefined') ?  false : def;
     var adv_select_str = "";
     if(to == ""){
         adv_select_str = "От "+from;

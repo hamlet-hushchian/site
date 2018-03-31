@@ -140,7 +140,6 @@ Class ListingController extends AbstractActionController
             $form->prepare();
         }
 
-
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
 
@@ -232,11 +231,7 @@ Class ListingController extends AbstractActionController
                     $request->getFiles()->toArray()
                 );
             }
-//            var_dump($data);
-//            die('ss');
             $form->setData($data);
-//            var_dump($form->getData);
-//            die('ss');
             if ($form->isValid()) {
                 $data = $form->getData();
 
@@ -259,8 +254,8 @@ Class ListingController extends AbstractActionController
 
                 return $this->redirect()->toRoute("listings", ['action' => 'edit', 'id' => $listingId]);
             } else {
-                var_dump($form->getMessages());
-                die();
+//                var_dump($form->getMessages());
+                die('Error Form is invalid');
             }
         }
 
