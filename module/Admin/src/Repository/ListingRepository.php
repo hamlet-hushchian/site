@@ -3,13 +3,11 @@
 namespace Admin\Repository;
 
 use Admin\Entity\Listing;
-use Admin\Entity\PropertyParamsValue;
 use Doctrine\ORM\EntityRepository;
 
 // Это пользовательский класс репозитория для сущности Listing.
 class ListingRepository extends EntityRepository
 {
-
     public function getAllListings()
     {
         $entityManager = $this->getEntityManager();
@@ -22,7 +20,7 @@ class ListingRepository extends EntityRepository
             $levels = $listing->getParamsValue()[3]->getValue();
             $q_rooms = $listing->getParamsValue()[0]->getValue();
 
-            $levelsString = $this->formatLevels($level,$levels);
+            $levelsString = $this->formatLevels($level, $levels);
             $roomsString = $this->formatRooms($q_rooms);
 
             $listing->getParamsValue()['levelsString'] = $levelsString;
@@ -37,7 +35,7 @@ class ListingRepository extends EntityRepository
         $listing = $entityManager->getRepository(Listing::class)->findOneById($id);
 
         $roomsString = $this->formatRooms($listing->getParamsValue()[1]->getValue());
-        $levelsString = $this->formatLevels($listing->getParamsValue()[2]->getValue(),$listing->getParamsValue()[3]->getValue());
+        $levelsString = $this->formatLevels($listing->getParamsValue()[2]->getValue(), $listing->getParamsValue()[3]->getValue());
 
         $latLong = $this->getLatLong($listing->getStreet());
         $listing->lat = $latLong[0];
@@ -133,11 +131,19 @@ class ListingRepository extends EntityRepository
 
     public function getListingsForAdmin($params = false)
     {
-
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        if($params && is_array($params))
-        {
+        if ($params && is_array($params)) {
+
+            if (isset($params['pricefrom'])) {
+                $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
+                $params['pricefrom'] = $this->convertPrice($params['pricefrom'], $currency);
+            }
+
+            if (isset($params['priceto'])) {
+                $currency = isset($params['currency']) ? strtolower($params['currency']) : 'usd';
+                $params['priceto'] = $this->convertPrice($params['priceto'], $currency);
+            }
 
             $queryBuilder->select('l')
                 ->from(Listing::class, 'l')
@@ -190,16 +196,18 @@ class ListingRepository extends EntityRepository
                 $queryBuilder->andWhere($queryBuilder->expr()->in('m.id', ':microdistricts'))
                     ->setParameter('microdistricts', $params['microdistrict']);
             }
-        }
-        else
-        {
+
+            if (isset($params['street'])) {
+                $queryBuilder->andWhere('l.street LIKE :street')
+                    ->setParameter('street', '%'.$params['street'].'%');
+            }
+        } else {
             $queryBuilder->select('l')
                 ->from(Listing::class, 'l')
                 ->orderBy('l.id', 'DESC');
         }
         return $queryBuilder->getQuery();
     }
-
 
 
     private function formatStreet($street)
@@ -216,22 +224,15 @@ class ListingRepository extends EntityRepository
         return $street_sh;
     }
 
-    private function formatLevels($level,$levels)
+    private function formatLevels($level, $levels)
     {
-        if($level !== '' && $levels !== "")
-        {
-            $result = $level.' этаж из '.$levels;
-        }
-        else if($level !== '' && $levels == '')
-        {
+        if ($level !== '' && $levels !== "") {
+            $result = $level . ' этаж из ' . $levels;
+        } else if ($level !== '' && $levels == '') {
             $result = $level . ' этаж';
-        }
-        else if($level == '' && $levels !== '')
-        {
-            $result = $levels.' этажей';
-        }
-        else if($level == '' && $levels == '')
-        {
+        } else if ($level == '' && $levels !== '') {
+            $result = $levels . ' этажей';
+        } else if ($level == '' && $levels == '') {
             $result = 'Неизвстно';
         }
         return $result;
@@ -240,22 +241,66 @@ class ListingRepository extends EntityRepository
     private function formatRooms($q_rooms)
     {
         $str = '';
-        if($q_rooms == 1)
+        if ($q_rooms == 1)
             $str = ' комната';
-        if($q_rooms > 1 && $q_rooms < 5)
+        if ($q_rooms > 1 && $q_rooms < 5)
             $str = ' комнаты';
-        if($q_rooms >= 5)
+        if ($q_rooms >= 5)
             $str = ' комнат';
-        return $q_rooms.$str;
+        return $q_rooms . $str;
     }
 
     private function getLatLong($addr)
     {
         $addr = urlencode($addr);
-        $mapData = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDKOsmSnuOK7SPlEtXGhZdxUZWg4QNRcoQ&new_forward_geocoder=true&address=$addr"),true);
+        $mapData = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDKOsmSnuOK7SPlEtXGhZdxUZWg4QNRcoQ&new_forward_geocoder=true&address=$addr"), true);
         $lat = $mapData['results'][0]['geometry']['bounds']['northeast']['lat'];
         $lng = $mapData['results'][0]['geometry']['bounds']['northeast']['lng'];
-        return [$lat,$lng];
+        return [$lat, $lng];
+    }
+
+    private function convertPrice($price, $currency, $beatify = false)
+    {
+        $result = [];
+        $moduleConfig = include __DIR__ . '/../../config/module.config.php';
+        $rate = $moduleConfig['exchange_rate'];
+        switch ($currency) {
+            case 'uah':
+                $result['uah'] = round($price);
+                $result['usd'] = round($price / $rate['usd']);
+                $result['eur'] = round($price / $rate['eur']);
+                break;
+            case 'usd':
+                $result['uah'] = round($price * $rate['usd']);
+                $result['usd'] = round($price);
+                $result['eur'] = round($result['uah'] / $rate['eur']);
+                break;
+            case 'eur':
+                $result['uah'] = round($price * $rate['eur']);
+                $result['usd'] = round($result['uah'] / $rate['usd']);
+                $result['eur'] = round($price);
+                break;
+            default:
+                $result['uah'] = round($price * $rate['usd']);
+                $result['usd'] = round($price);
+                $result['eur'] = round($result['uah'] / $rate['eur']);
+                break;
+        }
+        if ($beatify) {
+            foreach ($result as $k => $v) {
+                $arr = str_split($v);
+                $res = '';
+                $j = 0;
+                for ($i = count($arr); $i > -1; $i--) {
+                    $res = $arr[$i] . $res;
+                    if ($j % 3 == 0)
+                        $res = ' ' . $res;
+                    $j++;
+                }
+                $result[$k] = $res;
+            }
+        }
+        return $result;
     }
 
 }
