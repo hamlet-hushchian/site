@@ -36,11 +36,6 @@ class ListingManager
         return $this->entityManager->getRepository(Listing::class)->getListing($id);
     }
 
-    public function getSearchResult($d_type, $p_type, $city, $params)
-    {
-        return $this->entityManager->getRepository(Listing::class)->getSearchResult($d_type, $p_type, $city, $params);
-    }
-
     public function getListingsForAdmin($params)
     {
         if (isset($params['pricefrom'])) {
@@ -392,12 +387,15 @@ class ListingManager
             $data['step1']['phone'][] = $phone->getNumber();
         }
 
+
+        foreach ($listing->getParamsValue() as $paramValue) {
+            $params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
+        }
+
+
         //Set data for step 2
-        if ($data['step1']['property_type'] == 1)//Квартира
+        if ($data['step1']['property_type'] == 1)//Flat
         {
-            foreach ($listing->getParamsValue() as $paramValue) {
-                $params[$paramValue->getParam()->getParamKey()] = $paramValue->getValue();
-            }
             $data['step2']['q_rooms'] = $params['q_rooms'];
             $data['step2']['plan'] = $params['plan_build'];
             $data['step2']['common_square'] = $params['common_square'];
@@ -415,7 +413,7 @@ class ListingManager
             $data['step2']['currency'] = $listing->getCurrency()->getId();
             $data['step2']['description'] = $listing->getDescription();
         }
-        if ($data['step1']['property_type'] == 2)//Комната
+        if ($data['step1']['property_type'] == 2)//Room
         {
             $data['step2']['common_square'] = $params['common_square'];
             $data['step2']['kitchen_square'] = $params['kitchen_square'];
@@ -429,6 +427,22 @@ class ListingManager
             $data['step2']['price'] = $listing->getPrice();
             $data['step2']['currency'] = $listing->getCurrency()->getId();
             $data['step2']['description'] = $listing->getDescription();
+        }
+        if($data['step1']['property_type'] == 3) //House
+        {
+            $data['step2']['q_rooms'] = $params['q_rooms'];
+            $data['step2']['plan'] = $params['plan_build'];
+            $data['step2']['levels'] = $params['levels'];
+            $data['step2']['san_node'] = $params['san_node'];
+            $data['step2']['price'] = $listing->getPrice();
+            $data['step2']['currency'] = $listing->getCurrency()->getId();
+            $data['step2']['description'] = $listing->getDescription();
+            $data['step2']['common_square'] = $params['common_square'];
+            $data['step2']['real_square'] = $params['real_square'];
+            $data['step2']['kitchen_square'] = $params['kitchen_square'];
+            $data['step2']['size_land'] = $params['size_land'];
+            $data['step2']['type_wall'] = $params['type_wall'];
+            $data['step2']['type_window'] = $params['type_window'];
         }
 
 

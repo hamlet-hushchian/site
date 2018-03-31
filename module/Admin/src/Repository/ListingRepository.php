@@ -61,6 +61,7 @@ class ListingRepository extends EntityRepository
             ->leftJoin('l.microdistrict', 'm')
             ->leftJoin('m.district', 'di')
             ->leftJoin('di.city', 'c')
+            ->join('l.paramsValue', 'q_rooms', 'WITH', 'q_rooms.paramId = 2')
             ->where($queryBuilder->expr()->andX('d.nameLat = :deal', 'p.nameLat = :property', 'c.nameLat = :city'))
             ->setParameter('deal',$d_type)
             ->setParameter('property', $p_type)
