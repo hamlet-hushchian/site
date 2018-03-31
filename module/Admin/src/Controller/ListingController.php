@@ -71,17 +71,19 @@ Class ListingController extends AbstractActionController
                 preg_match_all("/rooms=([1-6])/",$_SERVER['REQUEST_URI'],$matches);
                 $params['rooms'] = $matches[1];
             }
-            $query = $this->listingManager->getListingsForAdmin($params);
+            $query = $this->entityManager->getRepository(Listing::class)
+                ->getListingsForAdmin($params);
         }
         else
         {
             $query = $this->entityManager->getRepository(Listing::class)
-                ->getListingsForAdmin($params);
+                ->getListingsForAdmin();
         }
 
         if($params['id'])
         {
-            $paginator = $this->listingManager->getOneListingForAdmin($params['id']);
+            $paginator = $query = $this->entityManager->getRepository(Listing::class)
+                ->findById($params['id']);
         }
         else
         {
@@ -90,8 +92,6 @@ Class ListingController extends AbstractActionController
             $paginator->setDefaultItemCountPerPage(10);
             $paginator->setCurrentPageNumber($page);
         }
-
-
 
         $districts = $this->entityManager->getRepository(District::class)->findAll();
 
